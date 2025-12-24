@@ -1,0 +1,191 @@
+/* 信息页面样式 */
+.info-page {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    line-height: 1.8;
+}
+
+.info-page h1 {
+    color: #2c3e50;
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.info-page h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    border-radius: 2px;
+}
+
+.info-page h2 {
+    color: #34495e;
+    font-size: 24px;
+    margin: 30px 0 20px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.info-page h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: #007bff;
+    border-radius: 2px;
+}
+
+.info-page h3 {
+    color: #2c3e50;
+    font-size: 18px;
+    margin: 20px 0 15px 0;
+}
+
+.info-page p {
+    color: #555;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.info-page ul, .info-page ol {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.info-page li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.info-page .highlight {
+    background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 25px 0;
+    border-left: 4px solid #007bff;
+}
+
+.info-page .contact-info {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.info-page .contact-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.info-page .contact-item:hover {
+    transform: translateY(-3px);
+}
+
+.info-page .contact-icon {
+    width: 50px;
+    height: 50px;
+    background: #007bff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: white;
+    font-size: 20px;
+}
+
+.info-page .contact-details h4 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.info-page .contact-details p {
+    margin: 0;
+    color: #666;
+}
+
+.info-page .breadcrumb {
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #666;
+}
+
+.info-page .breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.info-page .breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.info-page .btn {
+    display: inline-block;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 20px 10px 20px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.info-page .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .info-page {
+        margin: 20px;
+        padding: 25px;
+    }
+    
+    .info-page h1 {
+        font-size: 26px;
+    }
+    
+    .info-page h2 {
+        font-size: 20px;
+    }
+    
+    .info-page .contact-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-page {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .info-page h1 {
+        font-size: 24px;
+    }
+} 

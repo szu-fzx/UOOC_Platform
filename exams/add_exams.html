@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>题库管理页面</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 12px;
+    }
+    .attachment-preview {
+      margin-top: 10px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <link rel="shortcut icon" href="images/ico.png" type="image/x-icon">
+  <link rel="stylesheet" href="../Homepage/css/header.css">
+</head>
+<body>
+  <div class="container">
+    <h2>添加试题</h2>
+
+    <label for="bank">选择题库</label>
+    <select id="bank">
+      <option value="">-- 请选择题库 --</option>
+      <option value="math">数学题库</option>
+      <option value="english">英语题库</option>
+      <option value="cs">计算机基础题库</option>
+    </select>
+
+    <label>题型</label>
+    <div class="radio-group">
+      <label><input type="radio" name="type" value="choice" checked> 选择题</label>
+      <label><input type="radio" name="type" value="truefalse"> 判断题</label>
+      <label><input type="radio" name="type" value="fill"> 填空题</label>
+      <label><input type="radio" name="type" value="qa"> 问答题</label>
+    </div>
+
+    <label for="question">题干（支持文本与附件）</label>
+    <textarea id="question" rows="4" placeholder="请输入题干..."></textarea>
+    <input type="file" id="questionFile" accept="image/*,video/*,audio/*">
+    <div class="attachment-preview" id="qPreview"></div>
+
+    <label for="answer">答案解析（支持文本与附件）</label>
+    <textarea id="answer" rows="4" placeholder="请输入答案解析..."></textarea>
+    <input type="file" id="answerFile" accept="image/*,video/*,audio/*">
+    <div class="attachment-preview" id="aPreview"></div>
+
+    <button onclick="submitForm()">提交题目</button>
+  </div>
+
+  <script>
+    const qFile = document.getElementById('questionFile');
+    const aFile = document.getElementById('answerFile');
+
+    qFile.addEventListener('change', function () {
+      previewAttachment(this, 'qPreview');
+    });
+    aFile.addEventListener('change', function () {
+      previewAttachment(this, 'aPreview');
+    });
+
+    function previewAttachment(input, previewId) {
+      const file = input.files[0];
+      const preview = document.getElementById(previewId);
+      preview.innerHTML = ''; // 清空预览
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      let media;
+      if (file.type.startsWith('image/')) {
+        media = document.createElement('img');
+        media.style.maxWidth = '100%';
+      } else if (file.type.startsWith('video/')) {
+        media = document.createElement('video');
+        media.controls = true;
+        media.style.maxWidth = '100%';
+      } else if (file.type.startsWith('audio/')) {
+        media = document.createElement('audio');
+        media.controls = true;
+      }
+      if (media) {
+        media.src = url;
+        preview.appendChild(media);
+      }
+    }
+
+    function submitForm() {
+      const bank = document.getElementById('bank').value;
+      const type = document.querySelector('input[name="type"]:checked').value;
+      const question = document.getElementById('question').value;
+      const answer = document.getElementById('answer').value;
+
+      if (!bank || !question || !answer) {
+        alert("请填写完整信息");
+        return;
+      }
+
+      alert("题目提交成功！\n题库：" + bank + "\n题型：" + type);
+      // 这里可以接入后端接口处理提交
+    }
+  </script>
+</body>
+</html>

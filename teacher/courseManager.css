@@ -1,0 +1,589 @@
+/* 课程管理样式 - 现代化设计 */
+
+#courseManager body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+#courseManager h1, 
+#courseManager h2 {
+    color: #1e293b;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+#courseManager h1 {
+    font-size: 32px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#courseManager h2 {
+    font-size: 20px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+#courseManager h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #0ea5e9, #0284c7);
+    border-radius: 2px;
+}
+
+/* 表单组样式 */
+.form-group {
+    margin-bottom: 32px;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+    transition: all 0.3s ease;
+}
+
+.form-group:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* 标签样式 */
+#courseManager label {
+    display: block;
+    margin-bottom: 8px;
+    color: #475569;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 输入框样式 */
+#courseManager input[type="text"],
+#courseManager textarea,
+#courseManager select {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+#courseManager input[type="text"]:focus,
+#courseManager textarea:focus,
+#courseManager select:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    transform: translateY(-1px);
+}
+
+#courseManager textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+#courseManager select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    appearance: none;
+}
+
+/* 按钮样式 */
+button,
+.submit-button button,
+#publishedCourses button,
+.course-info button {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    margin: 8px 4px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before,
+.submit-button button::before,
+#publishedCourses button::before,
+.course-info button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+button:hover,
+.submit-button button:hover,
+#publishedCourses button:hover,
+.course-info button:hover {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.4);
+}
+
+button:hover::before,
+.submit-button button:hover::before,
+#publishedCourses button:hover::before,
+.course-info button:hover::before {
+    left: 100%;
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
+}
+
+/* 特殊按钮样式 */
+.form-group > button {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+}
+
+.form-group > button:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    box-shadow: 0 8px 32px rgba(34, 197, 94, 0.4);
+}
+
+/* 轮播图容器样式 */
+.carousel-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 2px dashed #cbd5e1;
+    margin: 16px 0;
+    min-height: 100px;
+}
+
+.carousel-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.carousel-item:hover {
+    transform: scale(1.05);
+}
+
+.carousel-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: move;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.carousel-image:hover {
+    border-color: #0ea5e9;
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2);
+}
+
+.carousel-image.dragging {
+    opacity: 0.7;
+    transform: scale(1.1) rotate(5deg);
+    z-index: 1000;
+}
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #fff;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.delete-button:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+}
+
+/* 作业项样式 */
+.assignment-item {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.assignment-item:hover {
+    border-color: #0ea5e9;
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);
+    transform: translateY(-2px);
+}
+
+.assignment-item h3 {
+    color: #1e293b;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.assignment-item p {
+    color: #64748b;
+    line-height: 1.6;
+    margin: 8px 0;
+}
+
+.assignment-item button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+/* 展开按钮样式 */
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.assignment-item button:hover {
+    background-color: #c9302c;
+}
+
+.expand-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #337ab7;
+    transition: color 0.3s;
+}
+
+.expand-button:hover {
+    color: #23527c;
+    text-decoration: none;
+}
+
+#selectedFiles {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 5px;
+    padding: 10px;
+    background: #f9f9f9;
+}
+
+#savedCoursewares {
+    margin-top: 20px;
+}
+
+#courseManager ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+.file-part{
+    width: 100%;
+    margin-left: 0;
+}
+
+.message-part{
+    width: 50%;
+    margin: auto;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group-checkbox label{
+    padding-top: 5px;
+}
+
+.vertical-line {
+    border-left: 1px solid #ddd;
+    height: 100%;
+    margin: 0 20px;
+}
+
+#assignmentDeadline{
+    width: 150px;
+}
+
+.assignment-form{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#forget{
+    display: none;
+}
+
+/* 折叠面板整体样式 */
+#courseware {
+    margin-top: 10px;
+    width: 97%;
+    border: 1px solid #ddd;
+}
+
+/* 保存的折叠面板列表 */
+#savedCoursewares {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    /* 左对齐 */
+}
+
+/* 每个列表项的样式 */
+#savedCoursewares>li {
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    padding-bottom: 10px;
+}
+
+
+#savedCoursewares>li:last-child {
+    border-bottom: none;
+}
+
+/* 按钮样式 */
+.expand-button {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #666;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.expand-button:hover {
+    background-color: white;
+    color: #000;
+}
+
+/* 折叠内容样式 */
+#savedCoursewares ul {
+    list-style: none;
+    padding-left: 20px;
+    margin: 10px 0 0;
+}
+
+#savedCoursewares ul.show {
+    display: block;
+    /* 显示折叠内容 */
+}
+
+/* 文件名称与链接样式 */
+#savedCoursewares span {
+    color: #333;
+}
+
+#savedCoursewares a {
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+#savedCoursewares a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.del {
+    background-color: white;
+    color: #d9534f;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.del:hover {
+    background-color: white;
+    color: #c9302c;
+}
+
+.teach {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    
+    transition: all 0.3s;
+}
+.teach:hover {
+    background-color: #f9f9f9;
+}
+
+.course-actions{
+    display: flex;
+    right: 20px;
+    position: absolute;
+}
+
+.course-actions a{
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.course-actions a:hover{
+    color: #F36C14;
+}
+
+.course-info{
+    position: relative;
+    flex: 1;
+}
+
+.del:hover {
+    color: #c9302c;
+}
+
+.showMessage {
+    margin-top: 10px;
+    width: 98%;
+    border: 1px solid #ddd;
+}
+
+.showMessage button{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #666;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding-bottom: 30px;
+}
+
+.showMessage button:hover {
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+#register_students .student-list,
+#submit_assignments .assignment-list{
+    list-style: none;
+    padding-left: 50px;
+}
+
+/* 每个列表项的样式 */
+#register_students .student-list>li,
+#submit_assignments .assignment-list>li {
+    padding-bottom: 10px;
+}
+
+.course-info #assignmentsContainer{
+    margin-top: 10px;
+    width: 98%;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.course-info #assignmentsContainer .assignment-item {
+    width: 90%;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+#toggle{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #666;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding-bottom: 30px;
+}
+
+#toggle:hover {
+    background-color: #f9f9f9;
+    color: #000;
+}

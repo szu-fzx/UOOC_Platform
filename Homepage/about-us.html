@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Youke Union</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/media.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <style>
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 80px;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .mission-card, .vision-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s ease;
+        }
+
+        .mission-card:hover, .vision-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .card-content {
+            color: #7f8c8d;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .value-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .value-desc {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        /* 横向时间轴样式 */
+        .horizontal-timeline {
+            position: relative;
+            padding: 60px 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .timeline-container {
+            display: flex;
+            min-width: 1000px;
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            flex: 1;
+            position: relative;
+            padding: 0 20px;
+            z-index: 2;
+        }
+
+        .timeline-content {
+            padding-top: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-content {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+            z-index: 3;
+        }
+
+        .timeline-year {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .timeline-desc {
+            color: #7f8c8d;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .member-desc {
+            color: #7f8c8d;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .contact-section {
+            background: #f8f9fa;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .contact-desc {
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .mission-vision {
+                grid-template-columns: 1fr;
+            }
+            
+            /* 移动端时间轴改为垂直 */
+            .horizontal-timeline {
+                overflow-x: visible;
+            }
+            
+            .timeline-container {
+                flex-direction: column;
+                min-width: auto;
+                padding-bottom: 0;
+            }
+            
+            .timeline-line {
+                left: 50px;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                height: auto;
+            }
+            
+            .timeline-item {
+                padding: 20px 0 20px 80px;
+                text-align: left;
+            }
+            
+            .timeline-dot {
+                top: 0;
+                left: 50px;
+            }
+            
+            .timeline-content {
+                margin-top: 0;
+                box-shadow: none;
+                border-left: 3px solid #667eea;
+                border-radius: 0;
+                padding-left: 30px;
+            }
+            
+            .timeline-year,
+            .timeline-title,
+            .timeline-desc {
+                text-align: left;
+            }
+            
+            .contact-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="WebsiteHomepage.html">Home</a></li>
+                    <li><a href="courseList.html">Courses</a></li>
+                    <li><a href="league.html">Alliance Colleges</a></li>
+                    <li><a href="about-us.html" class="active">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- User info will be loaded by JavaScript -->
+        </div>
+    </header>
+
+    <main>
+        <div class="about-container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1>About Youke Union</h1>
+                <p>
+                    We are committed to building China's leading online education ecosystem,
+                    connecting high-quality educational resources with learners, making knowledge accessible without boundaries.
+                </p>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="section">
+                <h2 class="section-title">Mission & Vision</h2>
+                <div class="mission-vision">
+                    <div class="mission-card">
+                        <div class="card-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="card-title">Our Mission</h3>
+                        <p class="card-content">
+                            Through advanced technology and high-quality educational resources, we provide every learner with a personalized and efficient learning experience,
+                            promote educational equity, and make quality education accessible to all.
+                        </p>
+                    </div>
+                    <div class="vision-card">
+                        <div class="card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="card-title">Our Vision</h3>
+                        <p class="card-content">
+                            To become a world-leading online education platform, building an open, shared, and collaborative educational ecosystem,
+                            making learning a driving force for lifelong growth for everyone.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Core Values -->
+            <section class="section">
+                <h2 class="section-title">Core Values</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="value-title">Learner First</h3>
+                        <p class="value-desc">Focus on learners' needs and continuously optimize the product experience</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="value-title">Quality First</h3>
+                        <p class="value-desc">Strictly control teaching quality and provide the best course content</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="value-title">Continuous Innovation</h3>
+                        <p class="value-desc">Embrace change and drive educational transformation with innovation</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="value-title">Open Collaboration</h3>
+                        <p class="value-desc">Work hand in hand with partners to build an educational ecosystem</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Development History - Horizontal Timeline -->
+            <section class="section">
+                <h2 class="section-title">Development History</h2>
+                <div class="horizontal-timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-container">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2025</div>
+                                <h3 class="timeline-title">Platform Upgrade</h3>
+                                <p class="timeline-desc">Comprehensive upgrade of technical architecture, launch of AI learning assistant, significant improvement in user experience</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2023</div>
+                                <h3 class="timeline-title">Alliance Expansion</h3>
+                                <p class="timeline-desc">Alliance colleges exceeded 50, courses surpassed 1,000, and registered users reached 300,000</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2022</div>
+                                <h3 class="timeline-title">Rapid Growth</h3>
+                                <p class="timeline-desc">Secured Series B funding, established partnerships with renowned universities, and launched mobile applications</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-year">2021</div>
+                                <h3 class="timeline-title">Platform Founded</h3>
+                                <p class="timeline-desc">Youke Union was officially established and released the first version of the online education platform</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Core Team -->
+            <section class="section">
+                <h2 class="section-title">Core Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3 class="member-name">Prof. Zhang</h3>
+                        <p class="member-role">Founder & CEO</p>
+                        <p class="member-desc">PhD in Education, 20 years of experience in the education industry, dedicated to promoting digital transformation in education</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="member-name">Engineer Li</h3>
+                        <p class="member-role">CTO</p>
+                        <p class="member-desc">Master of Computer Science, 10 years of experience in internet technology, focused on educational technology innovation</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3 class="member-name">Designer Wang</h3>
+                        <p class="member-role">Head of Product Design</p>
+                        <p class="member-desc">Interaction design expert, 8 years of product design experience, focused on user experience optimization</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="member-name">Manager Liu</h3>
+                        <p class="member-role">Head of Operations</p>
+                        <p class="member-desc">MBA, 12 years of experience in education industry operations, skilled in user growth and brand building</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Us -->
+            <section class="contact-section">
+                <h2 class="contact-title">Contact Us</h2>
+                <p class="contact-desc">
+                    If you have any questions or suggestions about our platform, or wish to establish a partnership with us,
+                    feel free to contact our team at any time.
+                </p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@youke-union.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>400-888-9999</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>No. 1 Zhongguancun Street, Haidian District, Beijing</span>
+                    </div>
+                </div>
+                <a href="../account/register.html" class="cta-button">Join Us Now</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="../header-footer/navigation.js"></script>
+    <script src="../header-footer/ai-assistant-float.js"></script>
+
+    <!-- Header user info loading script -->
+    <script>
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
+                document.querySelector('.info').innerHTML = `
+                    <a href="${profileUrl}">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
+                    <div class="card">
+                        <ul>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = 'WebsiteHomepage.html';
+                });
+            } else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>

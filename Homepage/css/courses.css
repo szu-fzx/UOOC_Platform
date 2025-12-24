@@ -1,0 +1,479 @@
+/* 课程列表样式 */
+.course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.course-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    flex-direction: column;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.course-image {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 宽高比 */
+    overflow: hidden;
+}
+
+.course-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.course-card:hover .course-image img {
+    transform: scale(1.05);
+}
+
+.course-info {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 0.75rem;
+    line-height: 1.4;
+}
+
+.course-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0 0 1rem;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.course-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.course-meta i {
+    margin-right: 0.5rem;
+    color: #3498db;
+}
+
+.course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #e74c3c;
+}
+
+.price.free {
+    color: #27ae60;
+}
+
+.learn-more {
+    color: #3498db;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.3s ease;
+}
+
+.course-card:hover .learn-more {
+    gap: 0.75rem;
+}
+
+/* 课程分类标题链接样式 */
+.section-title {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: inline-block;
+    position: relative;
+}
+
+.section-title:hover {
+    color: #007bff;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #007bff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.section-title:hover::after {
+    transform: scaleX(1);
+}
+
+/* 课程详情页样式 */
+.course-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.course-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.course-main-image {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-info h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.course-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+}
+
+.course-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.action-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.enroll-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+}
+
+.enroll-button:hover {
+    background-color: #357abd;
+}
+
+.preview-button {
+    background-color: white;
+    color: #4a90e2;
+    border: 1px solid #4a90e2;
+}
+
+.preview-button:hover {
+    background-color: #f5f8ff;
+}
+
+/* 课程内容区域 */
+.course-content-area {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.content-main {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-sidebar {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.course-outline {
+    list-style: none;
+    padding: 0;
+}
+
+.outline-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.outline-item:hover {
+    background-color: #f5f8ff;
+}
+
+.outline-item.active {
+    background-color: #e8f0fe;
+    color: #4a90e2;
+}
+
+/* 课程详情模态框样式 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    margin: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.course-header {
+    margin-bottom: 20px;
+    padding-right: 40px;
+}
+
+.course-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.course-body {
+    margin-bottom: 20px;
+}
+
+.course-description {
+    margin-bottom: 20px;
+}
+
+.course-description h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.course-description p {
+    margin: 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.content-list {
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.content-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.content-item:last-child {
+    border-bottom: none;
+}
+
+.content-item i {
+    margin-right: 10px;
+    color: #2196F3;
+}
+
+.course-comments {
+    margin-top: 20px;
+}
+
+.comments-list {
+    margin-top: 10px;
+}
+
+.comment-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.course-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.enroll-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.enroll-btn:hover {
+    background-color: #1976D2;
+}
+
+/* 无结果提示 */
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* 课程分类和搜索结果标题 */
+section h2 {
+    font-size: 1.75rem;
+    color: #2c3e50;
+    margin: 2rem 0 1rem;
+    padding: 0 2rem;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .course-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .course-info {
+        padding: 1rem;
+    }
+
+    .course-title {
+        font-size: 1.1rem;
+    }
+
+    .course-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.course-card {
+    animation: fadeIn 0.5s ease backwards;
+}
+
+.course-list > * {
+    animation-delay: calc(var(--animation-order, 0) * 100ms);
+}

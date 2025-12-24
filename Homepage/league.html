@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alliance Universities - Youke Union</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/media.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <style>
+        .league-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .league-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .universities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .university-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .university-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .university-logo {
+            width: 80px;
+            height: 80px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        .university-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .university-type {
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .university-courses {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .university-courses h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        .course-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .course-tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .join-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .join-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .join-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .league-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .universities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .join-section {
+                padding: 40px 20px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="WebsiteHomepage.html">Home</a></li>
+                    <li><a href="courseList.html">Courses</a></li>
+                    <li><a href="league.html" class="active">Alliance Universities</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- 用户信息将由JavaScript动态加载 -->
+        </div>
+    </header>
+
+    <main>
+        <div class="league-container">
+            <!-- 页面标题 -->
+            <div class="page-header">
+                <h1>Alliance Universities</h1>
+                <p class="subtitle">
+                    Youke Union brings together outstanding educational institutions nationwide to jointly create a high-quality online education ecosystem,
+                    providing learners with a rich and diverse range of quality course resources.
+                </p>
+            </div>
+
+            <!-- 数据统计 -->
+            <div class="league-stats">
+                <div class="stat-card">
+                    <div class="stat-number">68</div>
+                    <div class="stat-label">Alliance Universities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1200+</div>
+                    <div class="stat-label">Quality Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500,000+</div>
+                    <div class="stat-label">Online Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+
+            <!-- 院校列表 -->
+            <div class="universities-grid">
+                <div class="university-card">
+                    <div class="university-logo">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="university-name">Tsinghua University</h3>
+                    <p class="university-type">985 • 211 • Double First-Class</p>
+                    <div class="university-courses">
+                        <h4>Popular Course Fields</h4>
+                        <div class="course-tags">
+                            <span class="course-tag">Computer Science</span>
+                            <span class="course-tag">Artificial Intelligence</span>
+                            <span class="course-tag">Engineering Management</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="university-card">
+                    <div class="university-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="university-name">Peking University</h3>
+                    <p class="university-type">985 • 211 • Double First-Class</p>
+                    <div class="university-courses">
+                        <h4>Popular Course Fields</h4>
+                        <div class="course-tags">
+                            <span class="course-tag">Philosophy, History & Culture</span>
+                            <span class="course-tag">Economics & Management</span>
+                            <span class="course-tag">Literature & Art</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="university-card">
+                    <div class="university-logo">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="university-name">University of Chinese Academy of Sciences</h3>
+                    <p class="university-type">Research University</p>
+                    <div class="university-courses">
+                        <h4>Popular Course Fields</h4>
+                        <div class="course-tags">
+                            <span class="course-tag">Science & Engineering</span>
+                            <span class="course-tag">Frontier Technology</span>
+                            <span class="course-tag">Research Methods</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="university-card">
+                    <div class="university-logo">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3 class="university-name">Peking Union Medical College</h3>
+                    <p class="university-type">211 • Top Medical School</p>
+                    <div class="university-courses">
+                        <h4>Popular Course Fields</h4>
+                        <div class="course-tags">
+                            <span class="course-tag">Clinical Medicine</span>
+                            <span class="course-tag">Basic Medicine</span>
+                            <span class="course-tag">Public Health</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="university-card">
+                    <div class="university-logo">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="university-name">Beijing Foreign Studies University</h3>
+                    <p class="university-type">211 • Top Language School</p>
+                    <div class="university-courses">
+                        <h4>Popular Course Fields</h4>
+                        <div class="course-tags">
+                            <span class="course-tag">Education & Language</span>
+                            <span class="course-tag">International Communication</span>
+                            <span class="course-tag">Translation Practice</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="university-card">
+                    <div class="university-logo">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="university-name">Central University of Finance and Economics</h3>
+                    <p class="university-type">211 • Top Finance & Economics School</p>
+                    <div class="university-courses">
+                        <h4>Popular Course Fields</h4>
+                        <div class="course-tags">
+                            <span class="course-tag">Economics & Management</span>
+                            <span class="course-tag">Entrepreneurship & Workplace</span>
+                            <span class="course-tag">Financial Investment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 加入联盟 -->
+            <div class="join-section">
+                <h2>Join Youke Union</h2>
+                <p>
+                    We sincerely invite more outstanding educational institutions to join Youke Union and jointly promote the development of online education,
+                    providing learners with richer and higher-quality educational resources.
+                </p>
+                <div class="cta-buttons">
+                    <a href="../account/register.html" class="btn btn-primary">Apply to Join the Union</a>
+                    <a href="about-us.html" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="../header-footer/navigation.js"></script>
+    <script src="../header-footer/ai-assistant-float.js"></script>
+
+    <!-- 页眉用户信息加载脚本 -->
+    <script>
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
+                document.querySelector('.info').innerHTML = `
+                    <a href="${profileUrl}">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
+                    <div class="card">
+                        <ul>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = 'WebsiteHomepage.html';
+                });
+            } else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html> 

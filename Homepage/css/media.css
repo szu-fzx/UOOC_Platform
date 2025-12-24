@@ -1,0 +1,184 @@
+/* 视频播放器样式 */
+.video-player {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.video-player video {
+    width: 100%;
+    height: auto;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.video-player:hover .video-controls {
+    opacity: 1;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    border-radius: 2.5px;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 100%;
+    background: #007bff;
+    border-radius: 2.5px;
+    width: 0;
+    transition: width 0.1s linear;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-buttons button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.control-buttons button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.volume {
+    width: 100px;
+}
+
+/* 文件上传器样式 */
+.file-uploader {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-area.dragover {
+    border-color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.upload-area input[type="file"] {
+    display: none;
+}
+
+.supported-formats {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.file-name {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.file-size {
+    color: #666;
+    margin-right: 10px;
+}
+
+.file-progress {
+    width: 100px;
+    height: 5px;
+    background: #eee;
+    border-radius: 2.5px;
+    overflow: hidden;
+}
+
+.file-progress .progress {
+    height: 100%;
+    background: #28a745;
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.file-item.error {
+    background: #fff3f3;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+/* 文档查看器样式 */
+.document-viewer {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .video-player {
+        max-width: 100%;
+    }
+
+    .file-uploader {
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .control-buttons {
+        flex-wrap: wrap;
+    }
+
+    .volume {
+        width: 60px;
+    }
+}

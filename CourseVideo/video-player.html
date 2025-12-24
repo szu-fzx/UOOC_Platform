@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Learning - Online Course</title>
+    <link rel="stylesheet" href="video-player.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Course
+                </button>
+                <h1 class="course-title" id="courseTitle">Course Title</h1>
+            </div>
+            <div class="nav-right">
+                <button class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <!-- 视频播放区域 -->
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="videoPlayer" class="video-player" poster="">
+                        <source src="" type="video/mp4">
+                        Your browser does not support video playback.
+                    </video>
+                    
+                    <!-- 自定义控制栏 -->
+                    <div class="video-controls" id="videoControls">
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-filled" id="progressFilled"></div>
+                                <div class="progress-handle" id="progressHandle"></div>
+                            </div>
+                            <div class="time-display">
+                                <span id="currentTime">00:00</span>
+                                <span class="time-separator">/</span>
+                                <span id="duration">00:00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-buttons">
+                            <div class="left-controls">
+                                <button class="control-btn play-pause-btn" id="playPauseBtn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class="control-btn" id="prevBtn">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                                <button class="control-btn" id="nextBtn">
+                                    <i class="fas fa-step-forward"></i>
+                                </button>
+                                <div class="volume-container">
+                                    <button class="control-btn volume-btn" id="volumeBtn">
+                                        <i class="fas fa-volume-up"></i>
+                                    </button>
+                                    <div class="volume-slider">
+                                        <input type="range" id="volumeSlider" min="0" max="100" value="100">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="right-controls">
+                                <div class="speed-container">
+                                    <button class="control-btn speed-btn" id="speedBtn">
+                                        <span>1x</span>
+                                    </button>
+                                    <div class="speed-menu" id="speedMenu">
+                                        <div class="speed-option" data-speed="0.5">0.5x</div>
+                                        <div class="speed-option" data-speed="0.75">0.75x</div>
+                                        <div class="speed-option active" data-speed="1">1.0x</div>
+                                        <div class="speed-option" data-speed="1.25">1.25x</div>
+                                        <div class="speed-option" data-speed="1.5">1.5x</div>
+                                        <div class="speed-option" data-speed="2">2.0x</div>
+                                    </div>
+                                </div>
+                                <button class="control-btn" id="settingsBtn">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                                <button class="control-btn fullscreen-btn" id="fullscreenBtn">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 加载指示器 -->
+                    <div class="loading-indicator" id="loadingIndicator">
+                        <div class="loading-spinner"></div>
+                        <span>Loading...</span>
+                    </div>
+                </div>
+                
+                <!-- 视频信息 -->
+                <div class="video-info">
+                    <h2 class="video-title" id="videoTitle">Video Title</h2>
+                    <div class="video-meta">
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> <span id="viewCount">0</span> views</span>
+                            <span><i class="fas fa-clock"></i> <span id="uploadTime">Just now</span></span>
+                        </div>
+                        <div class="video-actions">
+                            <button class="action-btn like-btn" id="likeBtn">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span id="likeCount">0</span>
+                            </button>
+                            <button class="action-btn" id="shareBtn">
+                                <i class="fas fa-share"></i>
+                                Share
+                            </button>
+                            <button class="action-btn" id="collectBtn">
+                                <i class="fas fa-bookmark"></i>
+                                Collect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <!-- 推荐视频 -->
+                <div class="recommended-videos">
+                    <div class="section-header">
+                        <h3>Recommended Videos</h3>
+                    </div>
+                    <div class="recommended-items" id="recommendedItems">
+                        <!-- 推荐视频将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 评论区 -->
+        <div class="comments-section">
+            <div class="comments-header">
+                <h3>Comments</h3>
+                <span class="comment-count" id="commentCount">0 comments</span>
+            </div>
+            <div class="comment-input-container">
+                <div class="user-avatar">
+                    <img src="http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8" alt="User Avatar" id="userAvatar">
+                </div>
+                <div class="comment-input-box">
+                    <textarea id="commentInput" placeholder="Leave a friendly comment..."></textarea>
+                    <div class="comment-actions">
+                        <button class="emoji-btn">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                        <button class="submit-comment-btn" id="submitCommentBtn" onclick="submitComment()">Post</button>
+                    </div>
+                </div>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <!-- 评论列表将通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="video-player.js"></script>
+    <!-- <script src="../course/course.js"></script> -->
+</body>
+</html> 

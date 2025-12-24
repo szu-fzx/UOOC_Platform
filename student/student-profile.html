@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youke Union</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="images/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="../Homepage/css/header.css">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <link rel="stylesheet" href="student-profile.css">
+</head>
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="../Homepage/WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <!-- TODO 补充链接 -->
+                    <li><a href="../Homepage/WebsiteHomepage.html">Home</a></li>
+                    <li><a href="../Homepage/courseList.html">Courses</a></li>
+                    <li><a href="../Homepage/league.html">Alliance Colleges</a></li>
+                    <li><a href="../Homepage/about-us.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- TODO 补充链接 -->
+        </div>
+    </header>
+    <!-- 主体 -->
+    <div class="student-profile-header">
+        <div class="student-profile-head">
+            <img id="avatar" src="images/user-head.jpg" alt="User Avatar">
+            <div class="student-profile-info">
+                <h2 id="user-name">Username</h2>
+                <p id="signature">Signature: This is my signature.</p>
+            </div>
+        </div>
+    </div>
+    <div class="student-profile-body">
+        <div class="sidebar">
+            <a class="sidebar-item" href="#courses">My Courses</a>
+            <a class="sidebar-item" href="#tasks">Learning Tasks</a>
+            <a class="sidebar-item" href="#notes">Study Notes</a>
+            <a class="sidebar-item" href="#collects">My Favorites</a>
+            <a class="sidebar-item" href="#mistakes">My Mistakes</a>
+            <a class="sidebar-item" href="#exams">My Exams</a>
+            <a class="sidebar-item" href="#talks">My Discussions</a>
+        </div>
+        <div class="content">
+            <!-- 我的课程 -->
+            <div id="courses">
+                <div class="tabs">
+                    <a id="registered" class="tabs-item" href="#courses/registered">Registered Courses</a>
+                </div>
+                <div class="tabs-content">
+                </div>
+            </div>
+            <!-- 学习任务 -->
+            <div id="tasks">
+                <div class="tabs">
+                    <a id="document" class="tabs-item" href="#tasks/document">View Courseware</a>
+                    <a id="homework" class="tabs-item" href="#tasks/homework">Pending Assignments</a>
+                    <a id="finished-homework" class="tabs-item" href="#tasks/finished-homework">Submitted Assignments</a>
+                </div>
+                <div class="tabs-content">
+            
+                </div>
+            </div>
+            <!-- 学习笔记 -->
+            <div id="notes">
+                <div class="tabs">
+                    <a id="mynotes" class="tabs-item" href="#notes/mynotes">My Notes</a>
+                </div>
+                <div class="tabs-content">
+
+                </div>
+            </div>
+            <!-- 我的收藏 -->
+            <div id="collects">
+                <div class="tabs">
+                    <a id="collects-courses" class="tabs-item" href="#collects/collects-courses">Favorite Courses</a>
+                </div>
+                <div class="tabs-content">
+                    <div class="message collects-courses">
+                        <img src="images/smile.png" alt="笑脸图片">
+                        <p class="message">No favorites yet</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <div id="exams">
+                <div class="tabs">
+                    <a id="collects-courses" class="tabs-item" href="#collects/collects-courses">收藏课程</a>
+                </div>
+                <div class="tabs-content">
+                    <div class="message collects-courses">
+                        <img src="images/smile.png" alt="笑脸图片">
+                        <p class="message">目前还没有任何收藏</p>
+                    </div>
+                </div>
+            </div> -->
+            <div id="exams">
+                <div class="tabs">
+                    <a id="all-exams" class="tabs-item active" href="#exams/all">All Exams</a>
+                    <a id="upcoming-exams" class="tabs-item" href="#exams/upcoming">Upcoming</a>
+                    <a id="ongoing-exams" class="tabs-item" href="#exams/ongoing">Ongoing</a>
+                    <a id="completed-exams" class="tabs-item" href="#exams/completed">Completed</a>
+                </div>
+                <div class="tabs-content">
+                    <!-- 考试列表将通过JavaScript动态生成 -->
+                    <div class="exam-list">
+                        <!-- 示例考试卡片 -->
+                        <div class="exam-card">
+                            <div class="exam-header">
+                                <h3 class="exam-title">Final Exam</h3>
+                                <span class="exam-status status-upcoming">Upcoming</span>
+                            </div>
+                            <div class="exam-details">
+                                <p><i class="far fa-calendar-alt"></i> Exam Time: 2023-06-15 09:00 - 11:00</p>
+                                <p><i class="far fa-clock"></i> Duration: 120 minutes</p>
+                                <p><i class="fas fa-percentage"></i> Weight: 30%</p>
+                            </div>
+                            <div class="exam-actions">
+                                <button class="btn-view">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 我的错题 -->
+            <div id="mistakes">
+                <div class="tabs">
+                    <a id="mymistakes" class="tabs-item" href="#mistakes/mymistakes">My Mistakes</a>
+                </div>
+                <div class="tabs-content">
+                    <div class="message mymistakes">
+                        <img src="images/smile.png" alt="笑脸图片">
+                        <p class="message">No mistakes yet</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 我的讨论 -->
+            <div id="talks">
+                <div class="tabs">
+                    <a id="mytalks" class="tabs-item" href="#notes/mytalks">My Discussions</a>
+                </div>
+                <div class="tabs-content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="#home"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="../Homepage/about.html">About Us</a></li>
+                        <li><a href="../Homepage/contact.html">Contact Us</a></li>
+                        <li><a href="../Homepage/privacy.html">Privacy Policy</a></li>
+                        <li><a href="../Homepage/terms.html">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="student-profile-database.js"></script>
+    <!--页眉js-->
+    <script>
+        //根据token获取用户信息
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            //如果有用户登录，在info的div中显示用户头像，如果没用，显示登录注册按钮
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
+                document.querySelector('.info').innerHTML = `
+                    <a href="${profileUrl}">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
+                    <div class="card">
+                        <ul>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                //如果点击退出登录，清除token
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = '../Homepage/WebsiteHomepage.html';
+                });
+            }
+            else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+    <!--设置访问权限,只有学生可以登录该页面-->
+    <script>
+        // if(!localStorage.getItem('token')) {
+        //     alert('请先登录！');
+        //     window.location.href = '../account/login.html';
+        // }
+        // if(localStorage.getItem('token') === 'teacher' || localStorage.getItem('token') === 'admin') {
+        //     alert('您无权访问此页面！');
+        //     window.location.href = '../account/login.html';
+        // }
+    </script>
+    <script>
+        let userid = localStorage.getItem('token');
+        let user = JSON.parse(localStorage.getItem(userid));
+        document.getElementById('avatar').src = user.avatar;
+        document.getElementById('user-name').innerText = user.username;
+        //如果签名为空，显示"还没有设置签名"
+        if(user.signature === '') {
+            document.getElementById('signature').innerText = 'No signature set yet';
+        }
+        else {
+            document.getElementById('signature').innerText = 'Signature: ' + user.signature;
+        }
+    </script>
+    <!-- 现代化交互JavaScript -->
+    <script>
+        // 页面加载完成后执行初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePageInteractions();
+        });
+
+        // 初始化页面交互功能
+        function initializePageInteractions() {
+            // 设置侧边栏导航
+            setupSidebarNavigation();
+            
+            // 设置标签页切换
+            setupTabNavigation();
+            
+            // 默认显示第一个内容区域
+            showSidebarContent('courses');
+            
+            // 添加页面滚动效果
+            addScrollEffects();
+            
+            // 添加搜索功能
+            setupSearchFunctionality();
+        }
+
+        // 设置侧边栏导航
+        function setupSidebarNavigation() {
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 移除所有active类
+                    sidebarItems.forEach(si => si.classList.remove('active'));
+                    
+                    // 添加active类到当前点击的项
+                    this.classList.add('active');
+                    
+                    // 获取目标内容区域ID
+                    const targetId = this.getAttribute('href').substring(1);
+                    
+                    // 显示对应内容
+                    showSidebarContent(targetId);
+                    
+                    // 添加点击动画效果
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        }
+
+        // 设置标签页导航
+        function setupTabNavigation() {
+            const tabsItems = document.querySelectorAll('.tabs-item');
+            
+            tabsItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 获取父级tabs容器
+                    const tabsContainer = this.closest('.tabs');
+                    const tabsItems = tabsContainer.querySelectorAll('.tabs-item');
+                    
+                    // 移除所有active类
+                    tabsItems.forEach(ti => ti.classList.remove('active'));
+                    
+                    // 添加active类到当前点击的项
+                    this.classList.add('active');
+                    
+                    // 获取目标内容ID
+                    const href = this.getAttribute('href');
+                    const targetId = href.split('/')[1];
+                    
+                    // 显示对应的标签页内容
+                    showTabContent(targetId);
+                    
+                    // 添加点击动画效果
+                    this.style.transform = 'translateY(-2px)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(0)';
+                    }, 200);
+                });
+            });
+        }
+
+        // 显示侧边栏内容
+        function showSidebarContent(contentId) {
+            // 隐藏所有内容区域
+            const contentSections = document.querySelectorAll('.content > div');
+            contentSections.forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('fade-in');
+            });
+            
+            // 显示目标内容区域
+            const targetContent = document.getElementById(contentId);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                
+                // 添加淡入动画
+                setTimeout(() => {
+                    targetContent.classList.add('fade-in');
+                }, 50);
+                
+                // 激活第一个标签页
+                const firstTab = targetContent.querySelector('.tabs-item');
+                if (firstTab) {
+                    // 移除所有active类
+                    const allTabs = targetContent.querySelectorAll('.tabs-item');
+                    allTabs.forEach(tab => tab.classList.remove('active'));
+                    
+                    // 激活第一个标签页
+                    firstTab.classList.add('active');
+                    
+                    // 显示对应内容
+                    const href = firstTab.getAttribute('href');
+                    const tabContentId = href.split('/')[1];
+                    showTabContent(tabContentId);
+                }
+            }
+        }
+
+        // 添加滚动效果
+        function addScrollEffects() {
+            // 监听滚动事件，为卡片添加视差效果
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                const cards = document.querySelectorAll('.registered, .courseware, .homework, .mynotes, .mytalks');
+                
+                cards.forEach((card, index) => {
+                    const rect = card.getBoundingClientRect();
+                    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                    
+                    if (isVisible) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            // 初始化卡片动画
+            const cards = document.querySelectorAll('.registered, .courseware, .homework, .mynotes, .mytalks');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // 设置搜索功能
+        function setupSearchFunctionality() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            
+            // 搜索按钮点击事件
+            if (searchButton) {
+                searchButton.addEventListener('click', function() {
+                    performSearch();
+                });
+            }
+            
+            // 搜索输入框回车事件
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+        }
+
+        // 执行搜索
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput ? searchInput.value.trim() : '';
+            
+            if (!query) {
+                showNotification('Please enter a search keyword', 'warning');
+                return;
+            }
+            
+            // 这里可以添加具体的搜索逻辑
+            console.log('Search keyword:', query);
+            showNotification(`Searching: ${query}`, 'info');
+        }
+
+        // 防抖函数
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // 显示通知
+        function showNotification(message, type = 'info') {
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.className = 'notification ' + type;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+                max-width: 300px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            `;
+            
+            // 设置不同类型的颜色
+            switch(type) {
+                case 'success':
+                    notification.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                    break;
+                case 'warning':
+                    notification.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+                    break;
+                case 'error':
+                    notification.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                    break;
+                default:
+                    notification.style.background = 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)';
+            }
+            
+            // 添加到页面
+            document.body.appendChild(notification);
+            
+            // 3秒后自动移除
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            .fade-in {
+                animation: fadeIn 0.6s ease;
+            }
+            
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* 平滑滚动 */
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            /* 加载动画 */
+            .loading {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .loading::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                animation: shimmer 1.5s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% {
+                    left: -100%;
+                }
+                100% {
+                    left: 100%;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+    
+    <!-- AI助手悬浮按钮 -->
+    <script src="../header-footer/ai-assistant-float.js"></script>
+</body>
+</html>

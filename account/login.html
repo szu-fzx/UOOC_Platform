@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - Teaching Management System</title>
+    <link rel="stylesheet" href="account-login.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Login</h2>
+        <form id="login-form">
+            <div class="input-group">
+                <label for="userid">Student ID</label>
+                <input type="text" id="userid" placeholder="Please enter your student ID" required>
+                <span id="us-error-message" class="error-message"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Please enter your password" required>
+                <span id="pa-error-message" class="error-message"></span>
+            </div>
+
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember Account</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agree-policy" required>
+                    <label for="agree-policy">I agree to the <a href="#" target="_blank">Privacy Policy</a></label>
+                </div>
+            </div>
+
+            <button id="btn" type="submit" class="button">
+                <span class="button-text">Login</span>
+            </button>
+            
+            <div id="success-message" class="success-message"></div>
+        </form>
+        
+        <div class="auth-links">
+            <p>
+                Don't have an account? <a href="register.html">Register Now</a><br>
+                <a href="forgot-password.html">Forgot Password?</a>
+            </p>
+        </div>
+    </div>
+    
+    <script src="../database.js"></script>
+    <script src="account.js"></script>
+    <script>
+        // 检查是否记住账号，清除token
+        window.onload = function() {
+            const rememberMe = localStorage.getItem('rememberMe');
+            if (rememberMe) {
+                document.getElementById('userid').value = rememberMe;
+                document.getElementById('remember-me').checked = true;
+            }
+            localStorage.removeItem('token');
+        }
+
+        // 当离开用户id输入框时，验证是否填写用户id
+        document.getElementById('userid').addEventListener('blur', () => {
+            checkUserid();
+        });
+
+        // 当离开密码输入框时，验证是否填写密码
+        document.getElementById('password').addEventListener('blur', () => {
+            checkPassword();
+        });
+
+        let errorCount = 0; // 错误次数计数器
+        const maxErrors = 5; // 最大错误次数
+        let freezeTime = 5000; // 冻结5s
+
+        // 当点击登录按钮时，验证密码是否填写
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const button = document.getElementById('btn');
+            const buttonText = button.querySelector('.button-text');
+            const userid = document.getElementById('userid').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            const agreePolicy = document.getElementById('agree-policy').checked;
+
+            // 检查是否同意隐私政策
+            if (!agreePolicy) {
+                alert('Please agree to the Privacy Policy first');
+                return;
+            }
+
+            // 验证是否填写信息
+            if (!checkUserid() || !checkPassword()) {
+                return;
+            }
+
+            // 显示加载状态
+            button.classList.add('loading');
+            button.disabled = true;
+            buttonText.textContent = 'Logging in...';
+
+            // 模拟网络延迟
+            setTimeout(() => {
+                // 检验用户id是否存在
+                const item = JSON.parse(localStorage.getItem(userid));
+                if (!item) {
+                    document.getElementById('us-error-message').textContent = 'Student ID does not exist';
+                    resetButtonState();
+                    return;
+                }
+                document.getElementById('us-error-message').textContent = '';
+
+                // 根据localStorage判断密码是否正确
+                if(!isCorrect(password, userid, item.password)){
+                    document.getElementById('pa-error-message').textContent = `Incorrect password. After ${maxErrors} errors, the account will be frozen for ${freezeTime/1000} seconds`;
+                    document.getElementById('password').value = '';
+                    errorCount++;
+                    
+                    // 错误次数达到5次后冻结账户
+                    if(errorCount >= maxErrors){
+                        alert('Account has been frozen, please try again later');
+                        button.disabled = true;
+                        document.getElementById('login-form').style.pointerEvents = 'none';
+                        setTimeout(() => {
+                            button.disabled = false;
+                            document.getElementById('login-form').style.pointerEvents = '';
+                            errorCount = 0;
+                        }, freezeTime);
+                        freezeTime *= 2; // 冻结时间翻倍
+                    }
+                    resetButtonState();
+                    return;
+                }
+
+                // 清空错误信息
+                document.getElementById('us-error-message').textContent = '';
+                document.getElementById('pa-error-message').textContent = '';
+
+                // 检验账号状态
+                if(!item.status){
+                    alert('Account has been disabled, please contact your teacher');
+                    resetButtonState();
+                    return;
+                }
+
+                // 登录成功
+                document.getElementById('success-message').textContent = 'Login successful! Redirecting...';
+                
+                // 重置错误次数和冻结时间
+                errorCount = 0;
+                freezeTime = 5000;
+                
+                // 记录当前登录的用户id
+                localStorage.setItem('token', userid);
+                
+                // 检测是否勾选记住账号
+                if (rememberMe) {
+                    localStorage.setItem('rememberMe', userid);
+                } else {
+                    localStorage.removeItem('rememberMe');
+                }
+
+                // 1.5s后根据identity跳转到不同界面
+                setTimeout(() => {
+                    if(item.identity === 'student'){
+                        window.location.href = '../student/student-profile.html';
+                    }
+                    else if(item.identity === 'teacher'){
+                        window.location.href = '../teacher/teacher-profile.html';
+                    }
+                    else if(item.identity === 'admin'){
+                        window.location.href = '../account/admin-profile.html';
+                    }
+                }, 1500);
+            }, 800);
+        });
+
+        // 重置按钮状态
+        function resetButtonState() {
+            const button = document.getElementById('btn');
+            const buttonText = button.querySelector('.button-text');
+            button.classList.remove('loading');
+            button.disabled = false;
+            buttonText.textContent = 'Login';
+        }
+
+        // 重写checkPassword函数，不检验密码格式
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (!password) {
+                document.getElementById('pa-error-message').textContent = 'Please enter your password';
+                return false;
+            }
+            document.getElementById('pa-error-message').textContent = '';
+            return true;
+        }
+
+        // 验证密码是否正确
+        function isCorrect(password, userid, tPassword) {
+            // 根据localStorage判断密码是否正确
+            password = simpleHash(password, userid);
+            if(password !== tPassword){
+                return false;
+            }
+            return true;
+        }
+
+        // 添加输入框动画效果
+        document.querySelectorAll('.input-group input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

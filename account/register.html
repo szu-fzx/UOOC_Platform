@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration - Teaching Management System</title>
+    <link rel="stylesheet" href="account-login.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Create Account</h2>
+        <form id="register-form">
+            <div class="input-group">
+                <label for="userid">Student ID</label>
+                <input type="text" id="userid" placeholder="Please enter your student ID" required>
+                <span id="us-error-message" class="error-message"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Please enter your 11-digit phone number" required>
+                <span id="ph-error-message" class="error-message"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="6-16 characters, numbers and letters" required>
+                <span id="pa-error-message" class="error-message"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Please re-enter your password" required>
+                <span id="cp-error-message" class="error-message"></span>
+            </div>
+            
+            <button id="btn" type="button" class="button">
+                <span class="button-text">Register Now</span>
+            </button>
+            
+            <div id="success-message" class="success-message"></div>
+        </form>
+        
+        <div class="auth-links">
+            <p>
+                Already have an account? <a href="login.html">Login Now</a>
+            </p>
+        </div>
+    </div>
+    
+    <script src="../database.js"></script>
+    <script src="account.js"></script>
+    <script>
+        // 检查是否开启注册功能
+        window.onload = function() {
+            const teacher = JSON.parse(localStorage.getItem('teacher'));
+            if(!teacher || !teacher.allowRegister) {
+                alert('Registration is closed, please contact your teacher');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // 当离开用户id输入框时，验证是否填写用户id
+        document.getElementById('userid').addEventListener('blur', () => {
+            checkUserid();
+        });
+
+        // 当离开手机号输入框时，验证是否填写手机号
+        document.getElementById('phone').addEventListener('blur', () => {
+            checkPhone();
+        });
+
+        // 当离开密码输入框时，验证是否填写密码
+        document.getElementById('password').addEventListener('blur', () => {
+            checkPassword();
+        });
+
+        // 当离开确认密码输入框时，验证是否填写确认密码
+        document.getElementById('confirm-password').addEventListener('blur', () => {
+            checkConfirmPassword();
+        });
+
+        // 当点击注册按钮时，验证密码和确认密码是否一致
+        document.getElementById('btn').addEventListener('click', () => {
+            const button = document.getElementById('btn');
+            const buttonText = button.querySelector('.button-text');
+            const userid = document.getElementById('userid').value;
+            const phone = document.getElementById('phone').value;
+            let password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // 验证是否填写信息
+            if(!checkUserid() || !checkPhone() || !checkPassword() || !checkConfirmPassword()) {
+                return;
+            }
+
+            // 显示加载状态
+            button.classList.add('loading');
+            button.disabled = true;
+            buttonText.textContent = 'Registering...';
+
+            // 模拟网络延迟
+            setTimeout(() => {
+                // 检验用户id是否已存在
+                const item = JSON.parse(localStorage.getItem(userid));
+                if (item) {
+                    document.getElementById('us-error-message').textContent = 'This student ID has already been registered';
+                    resetButtonState();
+                    return;
+                }
+                document.getElementById('us-error-message').textContent = '';
+
+                // 验证密码和确认密码是否一致
+                if (password !== confirmPassword) {
+                    document.getElementById('cp-error-message').textContent = 'The two passwords do not match, please re-enter';
+                    resetButtonState();
+                    return;
+                }
+                document.getElementById('cp-error-message').textContent = '';
+
+                // 加盐哈希加密密码
+                password = simpleHash(password, userid);
+
+                // 与localStorage交互，将用户信息存储到localStorage中
+                const user = {
+                    userid: userid,
+                    username: userid, // 用户名默认为userid
+                    phone: phone,
+                    password: password,
+                    avatar: '../header-footer/images/ico.png', // 头像URL
+                    identity: 'student', // 学生
+                    gender: '不公开', // 性别
+                    status: true, // 状态: 启用/禁用
+                }
+                localStorage.setItem(user.userid, JSON.stringify(user)); // userid为键
+
+                // 清空错误信息
+                document.getElementById('us-error-message').textContent = '';
+                document.getElementById('ph-error-message').textContent = '';
+                document.getElementById('pa-error-message').textContent = '';
+                document.getElementById('cp-error-message').textContent = '';
+
+                // 显示注册成功信息
+                document.getElementById('success-message').textContent = 'Registration successful! Redirecting to login page...';
+
+                // 2s后跳转到登录页面
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }, 1000);
+        });
+
+        // 重置按钮状态
+        function resetButtonState() {
+            const button = document.getElementById('btn');
+            const buttonText = button.querySelector('.button-text');
+            button.classList.remove('loading');
+            button.disabled = false;
+            buttonText.textContent = 'Register Now';
+        }
+
+        // 添加输入框动画效果
+        document.querySelectorAll('.input-group input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+
+        // 实时验证密码匹配
+        document.getElementById('confirm-password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const errorElement = document.getElementById('cp-error-message');
+            
+            if (confirmPassword && password !== confirmPassword) {
+                errorElement.textContent = 'Passwords do not match';
+            } else {
+                errorElement.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>

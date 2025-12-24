@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Youke Union</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="../Homepage/css/header.css">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <link rel="stylesheet" href="../student/student-profile.css">
+    <link rel="stylesheet" href="../teacher/teacher-profile.css">
+    <link rel="stylesheet" href="courseManager.css">
+</head>
+
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="../Homepage/WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <!-- TODO 补充链接 -->
+                    <li><a href="../Homepage/WebsiteHomepage.html">Home</a></li>
+                    <li><a href="../Homepage/courseList.html">Courses</a></li>
+                    <li><a href="../Homepage/league.html">Alliance Universities</a></li>
+                    <li><a href="../Homepage/about.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- TODO 补充链接 -->
+        </div>
+    </header>
+    <!-- 主体 -->
+    <div class="student-profile-header">
+        <div class="student-profile-head">
+            <img id="avatar" src="" alt="User Avatar">
+            <div class="student-profile-info">
+                <h2 id="user-name">Username</h2>
+                <p id="signature">Signature: This is my signature.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="student-profile-body" style="width: 60%;">
+        <div class="sidebar">
+            <a class="sidebar-item" href="#courses">My Courses</a>
+            <a class="sidebar-item" href="#courseManager">Publish Course</a>
+            <!-- <a class="sidebar-item" href="#exams">Publish Exam</a> -->
+            <a class="sidebar-item" href="#student">Manage Students</a>
+        </div>
+        <div class="content">
+
+            <!-- 我的课程 -->
+            <div id="courses">
+                <div class="tabs">
+                    <a class="tabs-item" href="#courses/teach">Courses in Charge</a>
+                </div>
+
+                <div class="tabs-content">
+                </div>
+
+            </div>
+
+            <!-- 发布课程 -->
+            <div id="courseManager">
+                <div class="tabs">
+                    <a class="tabs-item" href="#courseManager/courseM">New Course</a>
+                </div>
+
+                <div class="tabs-content">
+                    <div class="courseM">
+                        <div class="file-part">
+                            <form id="coursePublishForm">
+
+                                <h2>Course Information</h2>
+                                <div class="form-group">
+                                    <label for="courseTitle">Course Title:</label>
+                                    <input type="text" id="courseTitle" name="courseTitle" required>
+                                    <label for="courseDescription">Course Description:</label>
+                                    <textarea id="courseDescription" name="courseDescription" required></textarea>
+                                    <label for="courseCategory">Course Category:</label>
+                                    <select id="courseCategory" name="courseCategory" required>
+                                        <option value="Science & Engineering">Science & Engineering</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Education & Language">Education & Language</option>
+                                        <!-- Other course categories -->
+                                        <option value="Literature & Art">Literature & Art</option>
+                                        <option value="Entrepreneurship & Workplace">Entrepreneurship & Workplace</option>
+                                        <option value="Philosophy, History & Culture">Philosophy, History & Culture</option>
+                                        <option value="Economics & Management">Economics & Management</option>
+                                        <option value="Medicine">Medicine</option>
+                                    </select>
+                                    <label for="courseIntro">Course Introduction:</label>
+                                    <textarea id="courseIntro" name="courseIntro" required></textarea>
+                                    
+                                    <label>Carousel Images:</label>
+                                    <div id="carouselContainer" class="carousel-container"></div>
+                                    <input type="file" id="carouselImageInput" accept="image/*" multiple>
+                                    <button type="button" onclick="addCarouselImages()">Add Images</button>
+                                    <div class="form-group-checkbox">
+                                        <label for="enableComments">Enable Course Comments:</label>
+                                        <input type="checkbox" id="enableComments" name="enableComments">
+                                    </div>
+                                    <div class="form-group-checkbox">
+                                        <label for="enableNotes">Enable Course Notes:</label>
+                                        <input type="checkbox" id="enableNotes" name="enableNotes">
+                                    </div>
+                                </div>
+
+                                <h2>Add Courseware</h2>
+                                <div class="form-group">
+                                    <label for="coursewareFile">Upload Courseware:</label>
+                                    <input type="file" id="coursewareFile" multiple>
+                                    <button type="button" onclick="saveCourseware()">Save Courseware</button>
+                                    <div id="courseware">
+                                        <ul id="savedCoursewares"></ul>
+                                    </div>
+                                </div>
+
+                                <h2>Add Assignment</h2>
+                                <div class="form-group">
+                                    <label for="assignmentTitle">Assignment Title:</label>
+                                    <input type="text" id="assignmentTitle" name="assignmentTitle">
+                                    <label for="newAssignment">Assignment Requirements:</label>
+                                    <textarea id="newAssignment" name="newAssignment"></textarea>
+                                    <label for="assignmentDeadline">Deadline:</label>
+                                    <input type="datetime-local" id="assignmentDeadline" name="assignmentDeadline">
+                                    <button type="button" onclick="addAssignment()">Assign Homework</button>
+                                    <div id="assignmentsContainer"></div>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" onclick="previewCourse()">Preview Course</button>
+                                    <button type="button" onclick="publishCourse()">Publish Course</button>
+                                </div>
+                            </form>
+                            <br>
+                            <div id="forget">
+                                <h2>Published Courses</h2>
+                                <ul id="publishedCourses"></ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- 修改 exams 部分的代码 -->
+            <div id="exams">
+                <div class="tabs">
+                    <a id="import-exam-file" class="tabs-item active" href="#exams/import-exam-file">Import File</a>
+                    <a id="manual-input" class="tabs-item" href="#exams/manual-input">Manual Entry</a>
+                </div>
+                <div class="tabs-content">
+                    <!-- 上传文件导入区域 -->
+                    <div class="import-exam-file" style="display: block;">
+                        <div class="upload-area">
+                            <img src="images/upload.png" alt="Upload Image">
+                            <p class="upload-text">Drag and drop files here or click to upload</p>
+                            <p class="upload-hint">Supports Excel (.xlsx, .xls) or JSON format</p>
+                            <input type="file" id="examFileInput" accept=".xlsx,.xls,.json" />
+                            <div class="file-info" id="fileInfo"></div>
+                        </div>
+                        <div class="exam-preview" id="examPreview" style="display: none;">
+                            <h3>Exam Preview</h3>
+                            <div id="previewContent"></div>
+                            <div class="publish-actions">
+                                <button class="btn-cancel" onclick="cancelUpload()">Cancel</button>
+                                <button class="btn-publish" onclick="publishExam()">Publish Exam</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 手动录入区域 -->
+                    <div class="manual-input" style="display: none;">
+                        <div class="manual-entry-form">
+                            <h3>Manual Entry of Questions</h3>
+                            <form id="manualExamForm">
+                                <div class="form-group">
+                                    <label for="examTitle">Exam Title:</label>
+                                    <input type="text" id="examTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="examDuration">Exam Duration (minutes):</label>
+                                    <input type="number" id="examDuration" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="examTotalScore">Total Score:</label>
+                                    <input type="number" id="examTotalScore" min="1" required>
+                                </div>
+                                <div class="question-list" id="questionList"></div>
+                                <button type="button" class="btn-add-question" onclick="addQuestion()">Add Question</button>
+                                <div class="publish-actions">
+                                    <button type="button" class="btn-preview" onclick="previewManualExam()">Preview</button>
+                                    <button type="button" class="btn-publish" onclick="publishManualExam()">Publish Exam</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 我的学生 -->
+            <div id="student">
+                <div class="tabs">
+                    <a class="tabs-item" href="#student/account">Student Accounts</a>
+                </div>
+                <div class="tabs-content">
+                    <div class="account">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Phone Number</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Student data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="#home"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="../Homepage/about.html">About Us</a></li>
+                        <li><a href="../Homepage/contact.html">Contact Us</a></li>
+                        <li><a href="../Homepage/privacy.html">Privacy Policy</a></li>
+                        <li><a href="../Homepage/terms.html">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="../teacher/teacher-profile-body.js"></script>
+    <!-- <script src="../teacher/teacher-profile-database.js"></script> -->
+    <script src="courseManager.js"></script>
+    <!--页眉js-->
+    <script>
+        //根据token获取用户信息
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            //如果有用户登录，在info的div中显示用户头像，如果没用，显示登录注册按钮
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
+                document.querySelector('.info').innerHTML = `
+                    <div id="user-menu-trigger" style="cursor: pointer;">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar">
+                    </div>
+                    <div class="card" id="user-dropdown">
+                        <ul>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                //如果点击退出登录，清除token
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = '../Homepage/WebsiteHomepage.html';
+                });
+
+                // 添加点击头像显示下拉菜单的功能
+                const userMenuTrigger = document.getElementById('user-menu-trigger');
+                const userDropdown = document.getElementById('user-dropdown');
+                
+                if (userMenuTrigger && userDropdown) {
+                    userMenuTrigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+                        userDropdown.style.opacity = userDropdown.style.display === 'block' ? '1' : '0';
+                        userDropdown.style.transform = userDropdown.style.display === 'block' ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(-10px)';
+                        userDropdown.style.pointerEvents = userDropdown.style.display === 'block' ? 'auto' : 'none';
+                    });
+
+                    // 点击其他地方关闭下拉菜单
+                    document.addEventListener('click', function(e) {
+                        if (!userMenuTrigger.contains(e.target) && !userDropdown.contains(e.target)) {
+                            userDropdown.style.display = 'none';
+                            userDropdown.style.opacity = '0';
+                            userDropdown.style.transform = 'translateX(-50%) translateY(-10px)';
+                            userDropdown.style.pointerEvents = 'none';
+                        }
+                    });
+                }
+            }
+            else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+    <!--设置访问权限,只有老师可以登录该页面-->
+    <script>
+        if (!localStorage.getItem('token')) {
+            alert('请先登录！');
+            window.location.href = '../account/login.html';
+        }
+        else if (localStorage.getItem('token') !== 'teacher') {
+            alert('您无权访问此页面！');
+            window.location.href = '../account/login.html';
+        }
+    </script>
+    <script>
+        let userid = localStorage.getItem('token');
+        let user = JSON.parse(localStorage.getItem(userid));
+        document.getElementById('avatar').src = user.avatar;
+        document.getElementById('user-name').innerText = user.username;
+        //如果签名为空，显示"还没有设置签名"
+        if (user.signature === '') {
+            document.getElementById('signature').innerText = 'No signature set yet';
+        }
+        else {
+            document.getElementById('signature').innerText = 'Signature: ' + user.signature;
+        }
+    </script>
+    <script>
+        //渲染,利用map和join方法来渲染表格
+        const tbody = document.querySelector('tbody');
+        function render() {
+            let teacher = JSON.parse(localStorage.getItem('teacher'));
+            if (teacher.allowRegister) {
+                //将开关打开
+                document.querySelector('.switch input').checked = true;
+            }
+            let students = getStudents();
+            const trStu = students.map(function (student, index) {
+                return `
+                    <tr>
+                        <td>${student.userid}</td>
+                        <td>${student.username}</td>
+                        <td>${student.gender}</td>
+                        <td>${student.phone}</td>
+                        <td>
+                            <a id="reset-password" class="reset-password" href="#" 
+                                data-id="${index}">Reset Password</a>
+                            <a id="disable" class="disable" href="#" data-id="${index}">
+                                ${student.status === false ? 'Enable' : 'Disable'}</a>
+                            <a id="delete" class="delete" href="#" data-id="${index}">Delete</a>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = trStu.join('');
+        };
+        render();
+        //点击重置密码、禁用/启用、删除按钮时的操作
+        tbody.addEventListener('click', function (e) {
+            if (e.target.id === 'reset-password') {
+                resetPassword(e);
+            }
+            else if (e.target.id === 'disable') {
+                changeStatus(e);
+            }
+            else if (e.target.id === 'delete') {
+                deleteAccount(e);
+            }
+        });
+        //获取localStorage中所有的值
+        function getStudents() {
+            var students = [];
+            for (var i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                //如果key是学生的学号，就把学生信息加入students数组
+                if (key.startsWith('2') || key.startsWith('student')) {
+                    students.push(JSON.parse(localStorage.getItem(key)));
+                }
+            }
+            return students;
+        }
+        //重置密码
+        function resetPassword(e) {
+            let students = getStudents();
+            const index = e.target.dataset.id;
+            const student = students[index];
+            const userid = student.userid;
+            student.password = simpleHash(userid, userid);//重置密码为学号
+            localStorage.setItem(student.userid, JSON.stringify(student));
+            render();
+            alert('Password reset successfully!');
+        }
+        //禁用/启用账号
+        function changeStatus(e) {
+            let students = getStudents();
+            const index = e.target.dataset.id;
+            const student = students[index];
+            student.status = !student.status;
+            localStorage.setItem(student.userid, JSON.stringify(student));
+            render();
+            alert(`Account has been ${student.status ? 'enabled' : 'disabled'}!`);
+        }
+        //删除账号
+        function deleteAccount(e) {
+            let students = getStudents();
+            const index = e.target.dataset.id;
+            const student = students[index];
+            if (confirm('Are you sure you want to delete this account?')) {
+                localStorage.removeItem(student.userid);
+                render();
+                alert('Account deleted!');
+            }
+        }
+        function publishManualExam() {
+    // 验证表单数据
+    const examTitle = document.getElementById('examTitle').value;
+    const examDuration = document.getElementById('examDuration').value;
+    const examTotalScore = document.getElementById('examTotalScore').value;
+    
+    if (!examTitle || !examDuration || !examTotalScore) {
+        alert('Please complete the exam information');
+        return;
+    }
+    
+    const questions = [];
+    document.querySelectorAll('.question-item').forEach(q => {
+        const id = q.getAttribute('data-id');
+        const type = document.getElementById(`questionType${id}`).value;
+        const text = document.getElementById(`questionText${id}`).value;
+        const score = document.getElementById(`questionScore${id}`).value;
+        
+        if (!text || !score) {
+            alert(`Content or score of question #${id} is incomplete`);
+            return;
+        }
+        
+        const question = { id, type, text, score };
+        
+        if (type !== 'fill_blank' && type !== 'short_answer') {
+            const options = [];
+            q.querySelectorAll('.option-item input').forEach((input, i) => {
+                options.push({
+                    id: i,
+                    text: input.value || `Option${String.fromCharCode(65 + i)}`
+                });
+            });
+            question.options = options;
+        }
+        
+        questions.push(question);
+    });
+    
+    if (questions.length === 0) {
+        alert('Please add at least one question');
+        return;
+    }
+    
+    // 构建试卷对象
+    const examData = {
+        title: examTitle,
+        duration: parseInt(examDuration),
+        totalScore: parseInt(examTotalScore),
+        questions: questions,
+        createdAt: new Date().toISOString(),
+        createdBy: JSON.parse(localStorage.getItem('teacher')).username
+    };
+    
+    // 在实际应用中，这里应该将试卷数据保存到数据库
+    console.log('发布的试卷数据:', examData);
+    alert('Exam published successfully!');
+    
+    // 重置表单
+    document.getElementById('manualExamForm').reset();
+    document.getElementById('questionList').innerHTML = '';
+    document.getElementById('examPreview').style.display = 'none';
+}
+
+// 发布试卷函数 - 用于文件导入模式
+function publishExam() {
+    const examFile = document.getElementById('examFileInput').files[0];
+    if (!examFile) {
+        alert('Please upload the exam file first');
+        return;
+    }
+    
+    // 这里应该是实际的发布逻辑
+    // 1. 解析试卷文件
+    // 2. 验证试卷数据
+    // 3. 保存到数据库
+    // 4. 发布到学生端
+    
+    // 模拟试卷数据
+    const examData = {
+        title: "高等数学期末考试",
+        totalScore: 100,
+        duration: 120,
+        questions: [
+            {
+                id: 1,
+                type: "single_choice",
+                text: "下列哪个是微积分基本定理的正确表述？",
+                options: ["选项A", "选项B", "选项C", "选项D"],
+                score: 10
+            },
+            {
+                id: 2,
+                type: "calculation",
+                text: "计算定积分∫(0到π) sinx dx的值。",
+                score: 20
+            }
+        ],
+        createdAt: new Date().toISOString(),
+        createdBy: JSON.parse(localStorage.getItem('teacher')).username
+    };
+    
+    console.log('发布的试卷数据:', examData);
+    alert('Exam published successfully!');
+    cancelUpload();
+}
+
+// 取消上传
+function cancelUpload() {
+    document.getElementById('examFileInput').value = '';
+    document.getElementById('fileInfo').style.display = 'none';
+    document.getElementById('examPreview').style.display = 'none';
+}
+
+// 添加试题
+function addQuestion() {
+    const questionList = document.getElementById('questionList');
+    const questionId = questionList.children.length + 1;
+    
+    const questionHtml = `
+        <div class="question-item" data-id="${questionId}">
+            <h4>Question #${questionId}</h4>
+            <div class="form-group">
+                <label for="questionType${questionId}">Question Type:</label>
+                <select id="questionType${questionId}" onchange="changeQuestionType(${questionId})">
+                    <option value="single_choice">Single Choice</option>
+                    <option value="multiple_choice">Multiple Choice</option>
+                    <option value="true_false">True/False</option>
+                    <option value="fill_blank">Fill in the Blank</option>
+                    <option value="short_answer">Short Answer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="questionText${questionId}">Question Content:</label>
+                <textarea id="questionText${questionId}" required></textarea>
+            </div>
+            <div class="form-group" id="optionsContainer${questionId}">
+                <label>Options:</label>
+                <div class="option-item">
+                    <input type="text" placeholder="Option${String.fromCharCode(65 + questionId - 1)}">
+                    <button type="button" onclick="removeOption(this)">Delete</button>
+                </div>
+                <button type="button" onclick="addOption(${questionId})">Add Option</button>
+            </div>
+            <div class="form-group">
+                <label for="questionScore${questionId}">Score:</label>
+                <input type="number" id="questionScore${questionId}" min="1" value="10" required>
+            </div>
+            <button type="button" class="btn-remove-question" onclick="removeQuestion(${questionId})">Delete this question</button>
+        </div>
+    `;
+    
+    questionList.insertAdjacentHTML('beforeend', questionHtml);
+}
+
+// 改变试题类型
+function changeQuestionType(questionId) {
+    const type = document.getElementById(`questionType${questionId}`).value;
+    const optionsContainer = document.getElementById(`optionsContainer${questionId}`);
+    
+    if (type === 'fill_blank' || type === 'short_answer') {
+        optionsContainer.style.display = 'none';
+    } else {
+        optionsContainer.style.display = 'block';
+    }
+}
+
+// 添加选项
+function addOption(questionId) {
+    const optionsContainer = document.getElementById(`optionsContainer${questionId}`);
+    const optionCount = optionsContainer.querySelectorAll('.option-item').length;
+    const nextChar = String.fromCharCode(65 + optionCount);
+    
+    const optionHtml = `
+        <div class="option-item">
+            <input type="text" placeholder="Option${nextChar}">
+            <button type="button" onclick="removeOption(this)">Delete</button>
+        </div>
+    `;
+    
+    optionsContainer.insertAdjacentHTML('beforeend', optionHtml);
+}
+
+// 删除选项
+function removeOption(button) {
+    button.parentElement.remove();
+}
+
+// 删除试题
+function removeQuestion(questionId) {
+    document.querySelector(`.question-item[data-id="${questionId}"]`).remove();
+    // 重新编号剩余的问题
+    const questions = document.querySelectorAll('.question-item');
+    questions.forEach((q, i) => {
+        q.setAttribute('data-id', i + 1);
+        q.querySelector('h4').textContent = `Question #${i + 1}`;
+    });
+}
+
+// 预览手动录入的试卷
+function previewManualExam() {
+    // 收集表单数据并生成预览
+    const examTitle = document.getElementById('examTitle').value;
+    const examDuration = document.getElementById('examDuration').value;
+    const examTotalScore = document.getElementById('examTotalScore').value;
+    
+    if (!examTitle || !examDuration || !examTotalScore) {
+        alert('Please complete the exam information');
+        return;
+    }
+    
+    const questions = [];
+    document.querySelectorAll('.question-item').forEach(q => {
+        const id = q.getAttribute('data-id');
+        const type = document.getElementById(`questionType${id}`).value;
+        const text = document.getElementById(`questionText${id}`).value;
+        const score = document.getElementById(`questionScore${id}`).value;
+        
+        if (!text || !score) {
+            alert(`Content or score of question #${id} is incomplete`);
+            return;
+        }
+        
+        const question = { id, type, text, score };
+        
+        if (type !== 'fill_blank' && type !== 'short_answer') {
+            const options = [];
+            q.querySelectorAll('.option-item input').forEach((input, i) => {
+                options.push({
+                    id: i,
+                    text: input.value || `Option${String.fromCharCode(65 + i)}`
+                });
+            });
+            question.options = options;
+        }
+        
+        questions.push(question);
+    });
+    
+    if (questions.length === 0) {
+        alert('Please add at least one question');
+        return;
+    }
+    
+    // 显示预览
+    const previewContent = document.getElementById('previewContent');
+    previewContent.innerHTML = `
+        <h4>${examTitle}</h4>
+        <p><strong>Total Score:</strong> ${examTotalScore}</p>
+        <p><strong>Duration:</strong> ${examDuration} minutes</p>
+        <div class="questions-preview">
+            <h5>Question List:</h5>
+            <ol>
+                ${questions.map(q => `
+                    <li>
+                        <p><strong>${q.text}</strong> (${q.score})</p>
+                        ${q.options ? `<ul>${q.options.map(o => `<li>${o.text}</li>`).join('')}</ul>` : ''}
+                    </li>
+                `).join('')}
+            </ol>
+        </div>
+    `;
+    
+    document.getElementById('examPreview').style.display = 'block';
+}
+    </script>
+    
+    <!-- AI助手悬浮按钮 -->
+    <script src="../header-footer/ai-assistant-float.js"></script>
+</body>
+
+</html>

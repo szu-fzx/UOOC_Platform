@@ -1,0 +1,359 @@
+/* ===== 全局样式 ===== */
+:root {
+  --primary-color: #4361ee;
+  --primary-light: #4cc9f0;
+  --secondary-color: #3a0ca3;
+  --dark-color: #2b2d42;
+  --light-color: #f8f9fa;
+  --gray-color: #8d99ae;
+  --success-color: #06d6a0;
+  --danger-color: #ef476f;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 32px rgba(67, 97, 238, 0.15);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ===== 主卡片容器 ===== */
+.profile-card {
+  max-width: 850px;
+  margin: 6rem auto 3rem; /* 增加顶部间距避免与导航栏重叠 */
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* 添加装饰性元素增强科技感 */
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+}
+
+/* ===== 标签页导航 ===== */
+.profile-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to bottom, #f9fafb, #f0f4f8);
+}
+
+.profile-tab {
+  flex: 1;
+  padding: 1.3rem;
+  text-align: center;
+  background: none;
+  border: none;
+  font-weight: 600;
+  color: var(--gray-color);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  letter-spacing: 0.5px;
+}
+
+.profile-tab.active {
+  color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.profile-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 3px 3px 0 0;
+}
+
+.profile-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== 表单内容 ===== */
+.tab-content {
+  display: none;
+  padding: 2.5rem;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.compact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+/* 头像区域 - 增强视觉效果 */
+.avatar-section {
+  flex: 0 0 130px;
+  position: relative;
+}
+
+#avatar-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border: 3px solid white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
+
+#avatar-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: var(--transition);
+  color: white;
+  font-size: 1.8rem;
+}
+
+#avatar-container:hover #avatar-overlay {
+  opacity: 1;
+}
+
+/* 基本信息 */
+.basic-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+/* 表单组 - 增强视觉效果 */
+.form-group {
+  flex: 1;
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  color: var(--dark-color);
+  font-size: 0.95rem;
+}
+
+.form-value {
+  display: block;
+  padding: 0.8rem 1rem;
+  background: rgba(245, 247, 250, 0.5);
+  border-radius: var(--border-radius);
+  color: var(--dark-color);
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #e1e5eb;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  font-size: 0.95rem;
+  background: rgba(245, 247, 250, 0.5);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+  outline: none;
+  background: white;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* 单选按钮组 - 现代化设计 */
+.radio-group {
+  display: flex;
+  gap: 1.8rem;
+  margin-top: 0.8rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-option input {
+  width: 18px;
+  height: 18px;
+  margin-right: 0.7rem;
+  appearance: none;
+  border: 2px solid #ced4da;
+  border-radius: 50%;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.radio-option input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.radio-option input:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 9px;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+/* 按钮和消息 - 增强交互效果 */
+.form-actions {
+  margin-top: 1.5rem;
+  text-align: right;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 1.5rem;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.error-message {
+  color: var(--danger-color);
+  font-size: 0.85rem;
+  margin-top: 0.7rem;
+  display: block;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
+}
+
+.success-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(6, 214, 160, 0.1);
+  color: var(--success-color);
+  border-radius: var(--border-radius);
+  display: none;
+  border-left: 4px solid var(--success-color);
+  animation: fadeIn 0.5s ease;
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 768px) {
+  .profile-card {
+    margin: 5rem 1rem 2rem;
+    border-radius: 10px;
+  }
+  
+  .form-section {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .profile-tabs {
+    flex-direction: column;
+  }
+  
+  .profile-tab {
+    padding: 1.2rem;
+  }
+  
+  .tab-content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .avatar-section {
+    align-self: center;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .form-actions {
+    text-align: center;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+  }
+}

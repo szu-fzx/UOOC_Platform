@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Youke Union</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="../Homepage/css/header.css">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <link rel="stylesheet" href="../student/student-profile.css">
+    <link rel="stylesheet" href="../teacher/teacher-profile.css">
+    <link rel="stylesheet" href="../account/admin-profile.css">
+    
+</head>
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="../Homepage/WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <!-- TODO 补充链接 -->
+                    <li><a href="../Homepage/WebsiteHomepage.html">Home</a></li>
+                    <li><a href="../Homepage/courseList.html">Courses</a></li>
+                    <li><a href="../Homepage/league.html">Alliance Universities</a></li>
+                    <li><a href="../Homepage/about-us.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- TODO 补充链接 -->
+        </div>
+    </header>
+    <!-- 主体 -->
+    <div class="student-profile-header">
+        <div class="student-profile-head">
+            <img id="avatar" src="" alt="User Avatar">
+            <div class="student-profile-info">
+                <h2 id="user-name">Username</h2>
+                <p id="signature">Signature: This is my signature.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="student-profile-body">
+        <div class="sidebar">
+            <a class="sidebar-item" href="#recommend">Recommended Courses</a>
+        </div>
+        <div class="content">
+            
+            <!-- 推荐课程 -->
+            <div id="recommend">
+                <div class="tabs">
+                    <a class="tabs-item" href="#recommend/course">Recommended Courses</a>
+                </div>
+
+                <div class="tabs-content">
+                    <button id="recommend-btn" class="button">Set as Recommended Course</button>
+                    <div class="course-list" id="course-list">
+                        
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="#home"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="../account/admin-profile-body.js"></script>
+    <!--页眉js-->
+    <script>
+        //根据token获取用户信息
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            //如果有用户登录，在info的div中显示用户头像，如果没用，显示登录注册按钮
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
+                document.querySelector('.info').innerHTML = `
+                    <a href="${profileUrl}">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
+                    <div class="card">
+                        <ul>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                //如果点击退出登录，清除token
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = '../Homepage/WebsiteHomepage.html';
+                });
+            }
+            else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+    <!--设置访问权限,只有管理员可以登录该页面-->
+    <script>
+        if(!localStorage.getItem('token')) {
+            alert('Please log in first!');
+            window.location.href = '../account/login.html';
+        }
+        else if(localStorage.getItem('token') !== 'admin'){
+            alert('You do not have permission to access this page!');
+            window.location.href = '../account/login.html';
+        }
+    </script>
+    <script>
+        let userid = localStorage.getItem('token');
+        let user = JSON.parse(localStorage.getItem(userid));
+        document.getElementById('avatar').src = user.avatar;
+        document.getElementById('user-name').innerText = user.username;
+        //如果签名为空，显示"还没有设置签名"
+        if(user.signature === '') {
+            document.getElementById('signature').innerText = 'No signature set yet';
+        }
+        else {
+            document.getElementById('signature').innerText = 'Signature: ' + user.signature;
+        }
+    </script>
+    
+</body>
+</html>

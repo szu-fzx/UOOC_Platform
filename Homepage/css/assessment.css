@@ -1,0 +1,248 @@
+/* 在线测评界面样式 */
+.assessment-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 测评头部 */
+.assessment-header {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.assessment-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.assessment-meta {
+    display: flex;
+    gap: 2rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.timer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #e24a4a;
+}
+
+/* 题目列表 */
+.question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.question-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.question-number {
+    font-weight: 600;
+    color: #4a90e2;
+}
+
+.question-score {
+    color: #666;
+}
+
+.question-content {
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 选择题样式 */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.option-item:hover {
+    background: #f5f8ff;
+    border-color: #4a90e2;
+}
+
+.option-item.selected {
+    background: #e8f0fe;
+    border-color: #4a90e2;
+}
+
+/* 编程题样式 */
+.code-editor {
+    margin-top: 1rem;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.language-select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.editor-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.editor-toolbar {
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.run-button {
+    background: #4caf50;
+    color: white;
+}
+
+.run-button:hover {
+    background: #43a047;
+}
+
+.reset-button {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.reset-button:hover {
+    background: #e0e0e0;
+}
+
+/* 测试用例面板 */
+.test-cases {
+    margin-top: 1rem;
+}
+
+.test-case {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.test-case-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.test-result {
+    font-weight: 500;
+}
+
+.test-result.pass {
+    color: #4caf50;
+}
+
+.test-result.fail {
+    color: #e24a4a;
+}
+
+/* 提交按钮 */
+.assessment-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.submit-button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-assessment {
+    background: #4a90e2;
+    color: white;
+}
+
+.submit-assessment:hover {
+    background: #357abd;
+}
+
+.save-draft {
+    background: white;
+    color: #4a90e2;
+    border: 1px solid #4a90e2;
+}
+
+.save-draft:hover {
+    background: #f5f8ff;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .assessment-container {
+        padding: 1rem;
+    }
+
+    .question-item {
+        padding: 1rem;
+    }
+
+    .assessment-actions {
+        flex-direction: column;
+        padding: 1rem;
+    }
+}

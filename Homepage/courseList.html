@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Course Teaching Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/carousel.css">
+    <link rel="stylesheet" href="css/media.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <link rel="stylesheet" href="courseList.css">
+</head>
+
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="../Homepage/WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <!-- TODO 补充链接 -->
+                    <li><a href="../Homepage/WebsiteHomepage.html">Home</a></li>
+                    <li><a href="./courseList.html">Courses</a></li>
+                    <li><a href="./league.html">Alliance Colleges</a></li>
+                    <li><a href="./about-us.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- TODO 补充链接 -->
+        </div>
+    </header>
+
+    <main>
+        <div class="category-container">
+
+            <div class="category">
+                <span class="category-title">Course Categories:</span>
+                <button class="category-option first-button active" data-category="All">All</button>
+                <button class="category-option" data-category="Science & Engineering">Science & Engineering</button>
+                <button class="category-option" data-category="Computer Science">Computer Science</button>
+                <button class="category-option" data-category="Education & Language">Education & Language</button>
+                <button class="category-option" data-category="Literature & Art">Literature & Art</button>
+                <button class="category-option" data-category="Entrepreneurship & Workplace">Entrepreneurship & Workplace</button>
+                <button class="category-option" data-category="Philosophy, History & Culture">Philosophy, History & Culture</button>
+                <button class="category-option" data-category="Economics & Management">Economics & Management</button>
+                <button class="category-option" data-category="Medicine">Medicine</button>
+                <!-- Add more categories as needed -->
+            </div>
+
+            <div class="category">
+                <span class="category-title">Sort By:</span>
+                <button class="sort-option" data-sort="registerCount">Number of Registrations</button>
+                <button class="sort-option" data-sort="created_at">Release Date</button>
+                <button class="sort-option" data-sort="updated_at">Update Date</button>
+                <button class="sort-option" data-sort="likes">Number of Likes</button>
+            </div>
+
+            <div class="category">
+                <span class="category-title">Sort Order:</span>
+                <button id="toggleSortOrder" data-order="desc">Descending</button>
+            </div>
+
+        </div>
+
+
+        <!-- <div class="divider"></div> -->
+        <!-- 各课程列表 -->
+        <div class="courses-container">
+            <div class="course-list"></div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const buttons = document.querySelectorAll('.course-titles button');
+
+                // // 初始化默认激活按钮
+                // document.querySelector('.recommended-courses button').classList.add('active');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // 移除所有按钮的激活状态
+                        buttons.forEach(btn => btn.classList.remove('active'));
+                        // 激活被点击的按钮
+                        this.classList.add('active');
+                    });
+                });
+            });
+
+            document.querySelectorAll('.category').forEach(category => {
+                category.addEventListener('click', function (event) {
+                    if (event.target.classList.contains('category-option')) {
+                        let buttons = category.querySelectorAll('.category-option');
+                        buttons.forEach(button => button.classList.remove('active'));
+                        event.target.classList.add('active');
+                    }
+                });
+            });
+        </script>
+
+    </main>
+
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="#home"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="../header-footer/navigation.js"></script>
+    <script src="../header-footer/ai-assistant-float.js"></script>
+    <script src="courseList.js"></script>
+    <!-- <script src="Homepage.js"></script> -->
+
+
+    <!--页眉js-->
+    <script>
+        //根据token获取用户信息
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            //如果有用户登录，在info的div中显示用户头像，如果没用，显示登录注册按钮
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                document.querySelector('.info').innerHTML = `
+                    <a href="${userid === 'teacher' ? '../teacher/teacher-profile.html' : '../student/student-profile.html'}">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
+                    <div class="card">
+                        <ul>
+                            <li><a href="${userid === 'teacher' ? '../teacher/teacher-profile.html' : '../student/student-profile.html'}">
+                                ${userid === 'teacher' ? 'Profile Center' : 'My Learning'}</a></li>
+                            <li><a href="${userid === 'teacher' ? '../account/teacher-setting.html' : '../account/student-setting.html'}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                //如果点击退出登录，清除token
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = '../Homepage/WebsiteHomepage.html';
+                });
+            }
+            else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

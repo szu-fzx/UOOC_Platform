@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Youke Union</title>
+    <link rel="stylesheet" href="css/info-pages.css">
+    <link rel="stylesheet" href="../header-footer/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
+</head>
+
+<body>
+    <!-- 页眉 -->
+    <header class="navbar">
+        <div class="nav">
+            <div class="logo">
+                <a href="../Homepage/WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../Homepage/WebsiteHomepage.html">Home</a></li>
+                    <li><a href="./courseList.html">Courses</a></li>
+                    <li><a href="./league.html">Alliance Universities</a></li>
+                    <li><a href="./about-us.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search courses...">
+            <button type="button" id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="info">
+            <!-- 用户信息将由JavaScript动态生成 -->
+        </div>
+    </header>
+
+    <main>
+        <div class="info-page">
+            <div class="breadcrumb">
+                <a href="../Homepage/WebsiteHomepage.html">Home</a> > About Us
+            </div>
+            
+            <h1>About Youke Union</h1>
+            
+            <div class="highlight">
+                <p><strong>Youke Union</strong> is committed to building China's leading online education platform, providing learners with high-quality, convenient, and efficient learning experiences.</p>
+            </div>
+
+            <h2>Our Mission</h2>
+            <p>To make quality educational resources accessible and provide personalized learning solutions for every learner. We believe education can change the world, and through the power of technology, we aim to make learning easier and more enjoyable.</p>
+
+            <h2>Platform Advantages</h2>
+            <ul>
+                <li><strong>Vast Course Resources:</strong> Covering fields such as science, engineering, computer science, education & language, literature & art, entrepreneurship & workplace, philosophy, history & culture, economics & management, medicine, and more</li>
+                <li><strong>Renowned Schools & Teachers:</strong> Gathering excellent faculty from well-known domestic and international institutions to ensure teaching quality</li>
+                <li><strong>Intelligent Learning:</strong> AI-based personalized recommendation system to customize exclusive learning paths for each student</li>
+                <li><strong>Interactive Community:</strong> A vibrant learning community where students can communicate and share learning experiences</li>
+                <li><strong>Certification System:</strong> A comprehensive course certification and credit system to ensure learning achievements are officially recognized</li>
+            </ul>
+
+            <h2>Development History</h2>
+            <p>Since its establishment in 2020, Youke Union has developed rapidly and has now:</p>
+            <ul>
+                <li>Accumulated over 5 million registered users</li>
+                <li>Partnered with over 200 higher education institutions</li>
+                <li>Launched over 10,000 courses</li>
+                <li>Covered 31 provinces, cities, and autonomous regions across China</li>
+                <li>Received multiple education innovation awards</li>
+            </ul>
+
+            <h2>Core Values</h2>
+            <ul>
+                <li><strong>Openness & Sharing:</strong> Make knowledge spread without boundaries and promote fair distribution of educational resources</li>
+                <li><strong>Innovation Driven:</strong> Continuously explore educational technology innovation to enhance the learning experience</li>
+                <li><strong>Quality First:</strong> Strictly control course quality and provide the best content for students</li>
+                <li><strong>Learner First:</strong> User-oriented, continuously optimizing products and services</li>
+                <li><strong>Integrity & Responsibility:</strong> Operate with integrity and be responsible to every user</li>
+            </ul>
+
+            <h2>Future Outlook</h2>
+            <p>Looking to the future, Youke Union will continue to uphold the concept of "Making Learning Better" and contribute to building a learning society through technological and educational innovation. In the next three years, we plan to:</p>
+            <ul>
+                <li>Expand international cooperation and introduce more high-quality overseas courses</li>
+                <li>Develop immersive learning experiences such as VR/AR</li>
+                <li>Establish a more comprehensive vocational skills certification system</li>
+                <li>Promote deep integration of industry, academia, and research</li>
+            </ul>
+
+            <div class="highlight">
+                <p>Join Youke Union and start your learning journey! We believe every learning experience is a step towards a better self.</p>
+            </div>
+
+            <a href="../Homepage/WebsiteHomepage.html" class="btn">Back to Home</a>
+            <a href="./contact.html" class="btn">Contact Us</a>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="../Homepage/WebsiteHomepage.html"><img src="../header-footer/images/logo.png" alt="Youke Union"></a>
+            </div>
+            <div class="footer-text">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="./about.html">About Us</a></li>
+                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="./privacy.html">Privacy Policy</a></li>
+                        <li><a href="./terms.html">Terms of Service</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-info">
+                    <p>&copy; 2025 Youke Union. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../database.js"></script>
+    <script src="../account/account.js"></script>
+    <script src="../header-footer/navigation.js"></script>
+    <script src="../header-footer/ai-assistant-float.js"></script>
+
+    <!--页眉js-->
+    <script>
+        //根据token获取用户信息
+        window.onload = function () {
+            const userid = localStorage.getItem('token');
+            //如果有用户登录，在info的div中显示用户头像，如果没用，显示登录注册按钮
+            if (userid) {
+                const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
+                document.querySelector('.info').innerHTML = `
+                    <a href="${profileUrl}">
+                        <img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
+                    <div class="card">
+                        <ul>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                //如果点击退出登录，清除token
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = '../Homepage/WebsiteHomepage.html';
+                });
+            }
+            else {
+                document.querySelector('.info').innerHTML = `
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html> 

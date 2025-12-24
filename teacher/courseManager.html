@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程发布</title>
+    <link rel="stylesheet" href="courseManager.css">
+</head>
+<body>
+    <div class="container">
+        <h1>发布新课程</h1>
+        <form id="coursePublishForm">
+
+            <div class="form-group">
+                <label for="coursewareFile">上传课件:</label>
+                <input type="file" id="coursewareFile" multiple onchange="displaySelectedFiles()">
+                <ul id="selectedFiles"></ul>
+                <button type="button" onclick="saveCourseware()">保存课件</button>
+                <h2>已保存的课件</h2>
+                <ul id="savedCoursewares"></ul>
+            </div>
+
+            <div class="form-group">
+                <label for="courseTitle">课程标题:</label>
+                <input type="text" id="courseTitle" name="courseTitle" required>
+            </div>
+            <div class="form-group">
+                <label for="courseDescription">课程描述:</label>
+                <textarea id="courseDescription" name="courseDescription" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="courseCategory">课程类别:</label>
+                <select id="courseCategory" name="courseCategory" required>
+                    <option value="理学·工学">理学·工学</option>
+                    <option value="计算机">计算机</option>
+                    <option value="教育·语言">教育·语言</option>
+                    <!-- 其他课程类别 -->
+                    <option value="文学·艺术">文学·艺术</option>
+                    <option value="创业·职场">创业·职场</option>
+                    <option value="哲史·文化">哲史·文化</option>
+                    <option value="经济·管理">经济·管理</option>
+                    <option value="医学">医学</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="courseIntro">课程简介:</label>
+                <textarea id="courseIntro" name="courseIntro" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>候选首页轮播图:</label>
+                <div id="carouselContainer" class="carousel-container"></div>
+                <input type="file" id="carouselImageInput" accept="image/*" multiple>
+                <button type="button" onclick="addCarouselImages()">添加图片</button>
+            </div>
+            <div class="form-group">
+                <label for="enableComments">打开课程评论区:</label>
+                <input type="checkbox" id="enableComments" name="enableComments">
+            </div>
+
+            <div class="form-group">
+                <label for="enableNotes">打开课程笔记区域:</label>
+                <input type="checkbox" id="enableNotes" name="enableNotes">
+            </div>
+
+            <div class="form-group">
+                <label for="assignmentTitle">作业名称:</label>
+                <input type="text" id="assignmentTitle" name="assignmentTitle">
+                <label for="newAssignment">作业要求:</label>
+                <textarea id="newAssignment" name="newAssignment"></textarea>
+                <label for="assignmentDeadline">截止日期:</label>
+                <input type="datetime-local" id="assignmentDeadline" name="assignmentDeadline">
+                <button type="button" onclick="addAssignment()">添加作业</button>
+            </div>
+            <div id="assignmentsContainer"></div>
+
+            <button type="button" onclick="previewCourse()">预览课程</button>
+            <button type="button" onclick="publishCourse()">发布课程</button>
+            
+        </form>
+        <h2>已发布的课程</h2>
+        <ul id="publishedCourses"></ul>
+    </div>
+    
+    <script src="courseManager.js"></script>
+    <script src="../database.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>学生在线答题界面</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f2f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .question {
+      margin-bottom: 30px;
+      padding: 20px;
+      border-left: 4px solid #007bff;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .question-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .options {
+      margin-left: 20px;
+    }
+
+    .options label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      margin: 30px auto 0;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Web前端知识测试</h2>
+
+    <!-- 单选题 -->
+    <div class="question">
+      <div class="question-title">1. 以下哪一个标签用于在 HTML 中插入图片？</div>
+      <div class="options">
+        <label><input type="radio" name="q1" value="A"> A. &lt;image&gt;</label>
+        <label><input type="radio" name="q1" value="B"> B. &lt;pic&gt;</label>
+        <label><input type="radio" name="q1" value="C"> C. &lt;img&gt;</label>
+        <label><input type="radio" name="q1" value="D"> D. &lt;src&gt;</label>
+      </div>
+    </div>
+
+    <!-- 判断题 -->
+    <div class="question">
+      <div class="question-title">2. CSS 可以用来改变网页的结构。（判断题）</div>
+      <div class="options">
+        <label><input type="radio" name="q2" value="true"> 对</label>
+        <label><input type="radio" name="q2" value="false"> 错</label>
+      </div>
+    </div>
+
+    <!-- 填空题 -->
+    <div class="question">
+      <div class="question-title">3. JavaScript 中用于输出内容到控制台的函数是：______</div>
+      <input type="text" name="q3" placeholder="请在此填写答案">
+    </div>
+
+    <!-- 问答题 -->
+    <div class="question">
+      <div class="question-title">4. 请简要说明 HTML、CSS 和 JavaScript 的职责划分。</div>
+      <textarea name="q4" rows="5" placeholder="请在此输入您的答案..."></textarea>
+    </div>
+
+    <button onclick="submitAnswers()">提交答案</button>
+  </div>
+
+  <script>
+    function submitAnswers() {
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value || "";
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value || "";
+      const q3 = document.querySelector('input[name="q3"]')?.value.trim();
+      const q4 = document.querySelector('textarea[name="q4"]')?.value.trim();
+
+      const answers = {
+        "选择题": q1,
+        "判断题": q2,
+        "填空题": q3,
+        "问答题": q4
+      };
+
+      console.log("提交的答案：", answers);
+
+      alert("您的答案已提交！可在控制台查看具体内容。");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* 文件上传区域样式 */
+.upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    background-color: #fafafa;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.upload-area.dragover {
+    border-color: #4a90e2;
+    background-color: #f5f8ff;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: #999;
+    margin-bottom: 1rem;
+}
+
+.upload-text {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.upload-button {
+    background-color: #4a90e2;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+    background-color: #357abd;
+}
+
+/* 文件列表样式 */
+.file-list {
+    margin-top: 2rem;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.file-icon {
+    font-size: 1.5rem;
+    color: #666;
+    margin-right: 1rem;
+}
+
+.file-info {
+    flex: 1;
+}
+
+.file-name {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.2rem;
+}
+
+.file-meta {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.file-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.file-action-button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.preview-button {
+    background-color: #e8f0fe;
+    color: #4a90e2;
+}
+
+.preview-button:hover {
+    background-color: #d0e3fc;
+}
+
+.delete-button {
+    background-color: #fee8e8;
+    color: #e24a4a;
+}
+
+.delete-button:hover {
+    background-color: #fcd0d0;
+}
+
+/* 上传进度条 */
+.upload-progress {
+    margin-top: 0.5rem;
+    height: 4px;
+    background-color: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4a90e2;
+    transition: width 0.3s;
+}
+
+/* 文件预览模态框 */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.preview-modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.preview-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.preview-body {
+    text-align: center;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+.preview-document {
+    width: 100%;
+    height: 70vh;
+    border: none;
+}
