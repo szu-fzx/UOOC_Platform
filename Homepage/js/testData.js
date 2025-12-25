@@ -10,7 +10,7 @@ const testData = {
             enrollCount: 1200,
             price: 0,
             recommended: true,
-            createDate: '2025-01-01'
+            createDate: '2025-12-01'
         },
         {
             id: 2,
@@ -21,7 +21,7 @@ const testData = {
             enrollCount: 980,
             price: 0,
             recommended: true,
-            createDate: '2025-01-02'
+            createDate: '2025-12-02'
         },
         {
             id: 3,
@@ -32,7 +32,7 @@ const testData = {
             enrollCount: 750,
             price: 0,
             recommended: false,
-            createDate: '2025-01-03'
+            createDate: '2025-12-03'
         }
     ],
     courseContents: [
@@ -58,7 +58,7 @@ const testData = {
             userId: 1,
             username: '小明',
             content: '课程讲解很清晰，非常适合入门！',
-            createTime: '2025-01-05 10:30:00'
+            createTime: '2025-12-05 10:30:00'
         }
     ]
 };
@@ -85,35 +85,35 @@ class TestDataGenerator {
                 password: 'admin123',
                 email: 'admin@example.com',
                 role: 'admin',
-                createDate: '2025-01-01T00:00:00.000Z'
+                createDate: '2025-12-01T00:00:00.000Z'
             },
             {
                 username: 'teacher1',
                 password: 'teacher123',
                 email: 'teacher1@example.com',
                 role: 'teacher',
-                createDate: '2025-01-02T00:00:00.000Z'
+                createDate: '2025-12-02T00:00:00.000Z'
             },
             {
                 username: 'teacher2',
                 password: 'teacher123',
                 email: 'teacher2@example.com',
                 role: 'teacher',
-                createDate: '2025-01-03T00:00:00.000Z'
+                createDate: '2025-12-03T00:00:00.000Z'
             },
             {
                 username: 'student1',
                 password: 'student123',
                 email: 'student1@example.com',
                 role: 'student',
-                createDate: '2025-01-04T00:00:00.000Z'
+                createDate: '2025-12-04T00:00:00.000Z'
             },
             {
                 username: 'student2',
                 password: 'student123',
                 email: 'student2@example.com',
                 role: 'student',
-                createDate: '2025-01-05T00:00:00.000Z'
+                createDate: '2025-12-05T00:00:00.000Z'
             }
         ];
 
@@ -138,7 +138,7 @@ class TestDataGenerator {
                 enrollCount: 1200,
                 price: 0,
                 recommended: true,
-                createDate: '2025-01-01'
+                createDate: '2025-12-01'
             },
             {
                 id: 2,
@@ -149,7 +149,7 @@ class TestDataGenerator {
                 enrollCount: 980,
                 price: 0,
                 recommended: true,
-                createDate: '2025-01-02'
+                createDate: '2025-12-02'
             },
             {
                 id: 3,
@@ -160,7 +160,7 @@ class TestDataGenerator {
                 enrollCount: 750,
                 price: 0,
                 recommended: false,
-                createDate: '2025-01-03'
+                createDate: '2025-12-03'
             }
         ];
 
@@ -244,7 +244,7 @@ class TestDataGenerator {
                 userId: 1,
                 username: 'student1',
                 content: 'Python课程讲解很清晰，非常适合入门！',
-                createTime: '2025-01-05 10:30:00'
+                createTime: '2025-12-05 10:30:00'
             },
             {
                 id: 2,
@@ -252,7 +252,7 @@ class TestDataGenerator {
                 userId: 2,
                 username: 'student2',
                 content: 'Web开发课程内容很实用，学到了很多。',
-                createTime: '2025-01-06 15:20:00'
+                createTime: '2025-12-06 15:20:00'
             },
             {
                 id: 3,
@@ -260,7 +260,7 @@ class TestDataGenerator {
                 userId: 1,
                 username: 'student1',
                 content: '数学讲解深入浅出，配套习题很有帮助。',
-                createTime: '2025-01-07 09:45:00'
+                createTime: '2025-12-07 09:45:00'
             }
         ];
 
