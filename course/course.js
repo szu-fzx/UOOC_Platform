@@ -112,8 +112,18 @@ function displayCourse(course) {
         </div>
     `;
 
-    // 检查用户是否已注册该课程
+    // 检查课程注册状态
     checkCourseRegistrationStatus(course.id);
+
+    // 设置初始点赞状态
+    const userId = getCurrentUserId();
+    if (userId) {
+        const likedKey = `liked_courses_${userId}`;
+        const likedCourses = JSON.parse(localStorage.getItem(likedKey) || '[]');
+        if (likedCourses.includes(course.id)) {
+            document.getElementById('likeButton').classList.add('active');
+        }
+    }
 
     // 课程简介
     const intro = document.getElementById('Intro');
@@ -731,6 +741,16 @@ function checkAndRegisterCourse(courseId) {
 
 // 点赞
 function likeCourse(courseId) {
+    const userId = getCurrentUserId();
+    if (!userId) {
+        alert('Please log in first to like courses');
+        return;
+    }
+
+    const likedKey = `liked_courses_${userId}`;
+    let likedCourses = JSON.parse(localStorage.getItem(likedKey) || '[]');
+    const isLiked = likedCourses.includes(courseId);
+
     const transaction = db.transaction(['courses'], 'readwrite');
     const objectStore = transaction.objectStore('courses');
     const request = objectStore.get(courseId);
@@ -738,7 +758,19 @@ function likeCourse(courseId) {
     request.onsuccess = function(event) {
         const course = event.target.result;
         if (course) {
-            course.likes = (course.likes || 0) + 1;
+            if (isLiked) {
+                // 取消点赞
+                course.likes = Math.max(0, (course.likes || 0) - 1);
+                likedCourses = likedCourses.filter(id => id !== courseId);
+                document.getElementById('likeButton').classList.remove('active');
+            } else {
+                // 点赞
+                course.likes = (course.likes || 0) + 1;
+                likedCourses.push(courseId);
+                document.getElementById('likeButton').classList.add('active');
+            }
+
+            localStorage.setItem(likedKey, JSON.stringify(likedCourses));
             const updateRequest = objectStore.put(course);
 
             updateRequest.onsuccess = function() {
