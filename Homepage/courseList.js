@@ -267,8 +267,12 @@ function displayCourses(courses) {
             courseItem.classList.add('registered');
             courseItem.id = course.id;
             
-            // 格式化日期
-            const publishDate = new Date(course.created_at || course.updated_at).toLocaleDateString('zh-CN');
+            // 按实际创建/更新时间格式化日期（年/月/日）
+            const dateObj = new Date(course.created_at || course.updated_at);
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const publishDate = `${year}/${month}/${day}`;
             
             // 处理注册人数显示
             const registerCount = course.registerCount || 0;
@@ -276,8 +280,12 @@ function displayCourses(courses) {
                 ? `${(registerCount / 1000).toFixed(1)}k` 
                 : registerCount.toString();
             
-                    // 处理点赞数显示（如果没有likes字段，根据注册人数生成一个模拟值）
-        const likesCount = course.likes || Math.floor((course.registerCount || 0) * 0.15) + Math.floor(Math.random() * 50);
+            // 处理点赞数显示（若明确提供 likes=0 也保持 0，不再用随机值）
+            const hasLikes = course.likes !== undefined && course.likes !== null;
+            // 若没有提供 likes，则默认为 0，不再使用随机占位
+            const likesCount = hasLikes 
+                ? Number(course.likes) || 0 
+                : 0;
             const likesText = likesCount >= 1000 
                 ? `${(likesCount / 1000).toFixed(1)}k` 
                 : likesCount.toString();
