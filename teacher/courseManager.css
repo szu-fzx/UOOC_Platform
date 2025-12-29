@@ -357,13 +357,32 @@ button:active {
 }
 
 .form-group-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 10px 0 !important;
+    cursor: pointer;
 }
 
-.form-group-checkbox label{
-    padding-top: 5px;
+.form-group-checkbox label {
+    margin: 0 !important; /* 彻底清除可能存在的上边距 */
+    padding: 0 !important;
+    text-transform: none !important;
+    font-size: 15px !important;
+    color: var(--teacher-text-main) !important;
+    cursor: pointer;
+    line-height: 1 !important; /* 确保行高不影响对齐 */
+    display: inline-block !important;
+}
+
+.form-group-checkbox input[type="checkbox"] {
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important; /* 彻底清除复选框的默认边距 */
+    cursor: pointer;
+    accent-color: var(--teacher-primary);
+    border-radius: 4px;
+    flex-shrink: 0;
 }
 
 .vertical-line {

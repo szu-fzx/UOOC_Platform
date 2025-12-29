@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -48,13 +48,27 @@
     </div>
     <div class="student-profile-body">
         <div class="sidebar">
-            <a class="sidebar-item" href="#courses">My Courses</a>
-            <a class="sidebar-item" href="#tasks">Learning Tasks</a>
-            <a class="sidebar-item" href="#notes">Study Notes</a>
-            <a class="sidebar-item" href="#collects">My Favorites</a>
-            <a class="sidebar-item" href="#mistakes">My Mistakes</a>
-            <a class="sidebar-item" href="#exams">My Exams</a>
-            <a class="sidebar-item" href="#talks">My Discussions</a>
+            <a class="sidebar-item active" href="#courses">
+                <i class="fas fa-book-open"></i> My Courses
+            </a>
+            <a class="sidebar-item" href="#tasks">
+                <i class="fas fa-tasks"></i> Learning Tasks
+            </a>
+            <a class="sidebar-item" href="#notes">
+                <i class="fas fa-sticky-note"></i> Study Notes
+            </a>
+            <a class="sidebar-item" href="#collects">
+                <i class="fas fa-heart"></i> My Favorites
+            </a>
+            <a class="sidebar-item" href="#mistakes">
+                <i class="fas fa-exclamation-circle"></i> My Mistakes
+            </a>
+            <a class="sidebar-item" href="#exams">
+                <i class="fas fa-pen-alt"></i> My Exams
+            </a>
+            <a class="sidebar-item" href="#talks">
+                <i class="fas fa-comments"></i> My Discussions
+            </a>
         </div>
         <div class="content">
             <!-- 我的课程 -->
@@ -92,19 +106,19 @@
                 </div>
                 <div class="tabs-content">
                     <div class="message collects-courses">
-                        <img src="images/smile.png" alt="笑脸图片">
+                        <img src="images/smile.png" alt="Smile">
                         <p class="message">No favorites yet</p>
                     </div>
                 </div>
             </div>
             <!-- <div id="exams">
                 <div class="tabs">
-                    <a id="collects-courses" class="tabs-item" href="#collects/collects-courses">收藏课程</a>
+                    <a id="collects-courses" class="tabs-item" href="#collects/collects-courses">Favorite Courses</a>
                 </div>
                 <div class="tabs-content">
                     <div class="message collects-courses">
-                        <img src="images/smile.png" alt="笑脸图片">
-                        <p class="message">目前还没有任何收藏</p>
+                        <img src="images/smile.png" alt="Smile">
+                        <p class="message">No favorites yet</p>
                     </div>
                 </div>
             </div> -->
@@ -235,11 +249,11 @@
     <!--设置访问权限,只有学生可以登录该页面-->
     <script>
         // if(!localStorage.getItem('token')) {
-        //     alert('请先登录！');
+        //     alert('Please login first!');
         //     window.location.href = '../account/login.html';
         // }
         // if(localStorage.getItem('token') === 'teacher' || localStorage.getItem('token') === 'admin') {
-        //     alert('您无权访问此页面！');
+        //     alert('You do not have permission to access this page!');
         //     window.location.href = '../account/login.html';
         // }
     </script>
@@ -260,172 +274,21 @@
     <script>
         // 页面加载完成后执行初始化
         document.addEventListener('DOMContentLoaded', function() {
-            initializePageInteractions();
-        });
-
-        // 初始化页面交互功能
-        function initializePageInteractions() {
-            // 设置侧边栏导航
-            setupSidebarNavigation();
-            
-            // 设置标签页切换
-            setupTabNavigation();
-            
-            // 默认显示第一个内容区域
-            showSidebarContent('courses');
-            
-            // 添加页面滚动效果
-            addScrollEffects();
-            
             // 添加搜索功能
             setupSearchFunctionality();
-        }
-
-        // 设置侧边栏导航
-        function setupSidebarNavigation() {
-            const sidebarItems = document.querySelectorAll('.sidebar-item');
-            
-            sidebarItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // 移除所有active类
-                    sidebarItems.forEach(si => si.classList.remove('active'));
-                    
-                    // 添加active类到当前点击的项
-                    this.classList.add('active');
-                    
-                    // 获取目标内容区域ID
-                    const targetId = this.getAttribute('href').substring(1);
-                    
-                    // 显示对应内容
-                    showSidebarContent(targetId);
-                    
-                    // 添加点击动画效果
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 150);
-                });
-            });
-        }
-
-        // 设置标签页导航
-        function setupTabNavigation() {
-            const tabsItems = document.querySelectorAll('.tabs-item');
-            
-            tabsItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // 获取父级tabs容器
-                    const tabsContainer = this.closest('.tabs');
-                    const tabsItems = tabsContainer.querySelectorAll('.tabs-item');
-                    
-                    // 移除所有active类
-                    tabsItems.forEach(ti => ti.classList.remove('active'));
-                    
-                    // 添加active类到当前点击的项
-                    this.classList.add('active');
-                    
-                    // 获取目标内容ID
-                    const href = this.getAttribute('href');
-                    const targetId = href.split('/')[1];
-                    
-                    // 显示对应的标签页内容
-                    showTabContent(targetId);
-                    
-                    // 添加点击动画效果
-                    this.style.transform = 'translateY(-2px)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(0)';
-                    }, 200);
-                });
-            });
-        }
-
-        // 显示侧边栏内容
-        function showSidebarContent(contentId) {
-            // 隐藏所有内容区域
-            const contentSections = document.querySelectorAll('.content > div');
-            contentSections.forEach(section => {
-                section.style.display = 'none';
-                section.classList.remove('fade-in');
-            });
-            
-            // 显示目标内容区域
-            const targetContent = document.getElementById(contentId);
-            if (targetContent) {
-                targetContent.style.display = 'block';
-                
-                // 添加淡入动画
-                setTimeout(() => {
-                    targetContent.classList.add('fade-in');
-                }, 50);
-                
-                // 激活第一个标签页
-                const firstTab = targetContent.querySelector('.tabs-item');
-                if (firstTab) {
-                    // 移除所有active类
-                    const allTabs = targetContent.querySelectorAll('.tabs-item');
-                    allTabs.forEach(tab => tab.classList.remove('active'));
-                    
-                    // 激活第一个标签页
-                    firstTab.classList.add('active');
-                    
-                    // 显示对应内容
-                    const href = firstTab.getAttribute('href');
-                    const tabContentId = href.split('/')[1];
-                    showTabContent(tabContentId);
-                }
-            }
-        }
-
-        // 添加滚动效果
-        function addScrollEffects() {
-            // 监听滚动事件，为卡片添加视差效果
-            window.addEventListener('scroll', function() {
-                const scrollY = window.scrollY;
-                const cards = document.querySelectorAll('.registered, .courseware, .homework, .mynotes, .mytalks');
-                
-                cards.forEach((card, index) => {
-                    const rect = card.getBoundingClientRect();
-                    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-                    
-                    if (isVisible) {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }
-                });
-            });
-            
-            // 初始化卡片动画
-            const cards = document.querySelectorAll('.registered, .courseware, .homework, .mynotes, .mytalks');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.6s ease';
-                
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }
+        });
 
         // 设置搜索功能
         function setupSearchFunctionality() {
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
             
-            // 搜索按钮点击事件
             if (searchButton) {
                 searchButton.addEventListener('click', function() {
                     performSearch();
                 });
             }
             
-            // 搜索输入框回车事件
             if (searchInput) {
                 searchInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
@@ -435,37 +298,15 @@
             }
         }
 
-        // 执行搜索
         function performSearch() {
             const searchInput = document.getElementById('searchInput');
             const query = searchInput ? searchInput.value.trim() : '';
-            
-            if (!query) {
-                showNotification('Please enter a search keyword', 'warning');
-                return;
-            }
-            
-            // 这里可以添加具体的搜索逻辑
-            console.log('Search keyword:', query);
-            showNotification(`Searching: ${query}`, 'info');
-        }
-
-        // 防抖函数
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+            if (!query) return;
+            window.location.href = `../Homepage/courseList.html?search=${encodeURIComponent(query.toLowerCase())}`;
         }
 
         // 显示通知
         function showNotification(message, type = 'info') {
-            // 创建通知元素
             const notification = document.createElement('div');
             notification.className = 'notification ' + type;
             notification.textContent = message;
@@ -483,105 +324,28 @@
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             `;
             
-            // 设置不同类型的颜色
             switch(type) {
-                case 'success':
-                    notification.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-                    break;
-                case 'warning':
-                    notification.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
-                    break;
-                case 'error':
-                    notification.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-                    break;
-                default:
-                    notification.style.background = 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)';
+                case 'success': notification.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)'; break;
+                case 'warning': notification.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'; break;
+                case 'error': notification.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'; break;
+                default: notification.style.background = 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)';
             }
             
-            // 添加到页面
             document.body.appendChild(notification);
-            
-            // 3秒后自动移除
             setTimeout(() => {
                 notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
+                setTimeout(() => { if (notification.parentNode) notification.parentNode.removeChild(notification); }, 300);
             }, 3000);
         }
 
         // 添加CSS动画
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-            
-            .fade-in {
-                animation: fadeIn 0.6s ease;
-            }
-            
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            /* 平滑滚动 */
-            html {
-                scroll-behavior: smooth;
-            }
-            
-            /* 加载动画 */
-            .loading {
-                position: relative;
-                overflow: hidden;
-            }
-            
-            .loading::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-                animation: shimmer 1.5s infinite;
-            }
-            
-            @keyframes shimmer {
-                0% {
-                    left: -100%;
-                }
-                100% {
-                    left: 100%;
-                }
-            }
+            @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+            @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+            .fade-in { animation: fadeIn 0.6s ease; }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+            html { scroll-behavior: smooth; }
         `;
         document.head.appendChild(style);
     </script>

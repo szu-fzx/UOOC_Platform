@@ -32,6 +32,9 @@ body {
     box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
     border: 1px solid rgba(99, 102, 241, 0.08);
     gap: 24px;
+    position: sticky;
+    top: 10px;
+    z-index: 2000;
 }
 
 .nav{
@@ -136,17 +139,31 @@ nav ul li a:hover{
 .card {
     display: none;
     position: absolute;
-    top: 65px;
+    top: calc(100% + 10px);
     left: 50%;
-    width: 100px; 
+    min-width: 180px; 
     background-color: white;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1000;
-    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+    z-index: 2100;
+    text-align: left;
     opacity: 0;
     transform: translateX(-50%) translateY(-10px);
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    padding: 8px 0;
+}
+
+/* 增加一个透明的桥接层，防止鼠标移出头像时下拉框消失 */
+.card::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: transparent;
 }
 
 .card ul {
@@ -162,13 +179,18 @@ nav ul li a:hover{
 
 .card a {
     display: block;
-    padding: 10px;
+    padding: 12px 20px;
     text-decoration: none;
-    color: #333;
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .card a:hover {
-    background-color: #f1f1f1;
+    background-color: rgba(99, 102, 241, 0.08);
+    color: #4f46e5;
+    padding-left: 24px;
 }
 
 .info:hover .card,

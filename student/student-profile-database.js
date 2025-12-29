@@ -131,37 +131,42 @@ function loadCourses() {
             noCourse.classList.add('message');
             noCourse.innerHTML = `
                 <img src="images/smile.png" alt="Smile Image">
-                <p class="message">No courses yet</p>
+                <p>No courses yet. Explore our course catalog to get started!</p>
             `;
             registeredCourses.appendChild(noCourse);
         }
         else {
-            ref_student_courses.forEach(function (ref_student_courses) {
-                transaction = db.transaction(['courses'], 'readonly');
-                objectStore = transaction.objectStore('courses');
-                request = objectStore.get(ref_student_courses.courseId);
-                request.onsuccess = function (event) {
+            ref_student_courses.forEach(function (ref_student_course) {
+                var innerTx = db.transaction(['courses'], 'readonly');
+                var innerStore = innerTx.objectStore('courses');
+                var innerReq = innerStore.get(ref_student_course.courseId);
+                innerReq.onsuccess = function (event) {
                     var course = event.target.result;
+                    if (!course) return;
                     var courseItem = document.createElement('div');
                     courseItem.classList.add('registered');
-                    courseItem.id = course.id;
                     courseItem.innerHTML = `
                         <div class="course-image"><img src="${course.carouselImages[0]}" alt="Course Cover"></div>
                         <div class="course-info">
-                            <a id="drop-out" href="#drop-out" onclick="dropOut(${ref_student_courses.id})">Drop Course</a>
-                                <br>
-                                <h2>${course.title}</h2>
-                                <p class="course-description">${course.description}</p>
-                                
-                                <div class="progress-container">
-                                    <div class="progress-bar" style="width: ${ref_student_courses.progress}%"></div>
-                                    <text class="progress-percent">Completed: ${ref_student_courses.progress}%</text>
-                                </div>
-                                <button id="preview-course" onclick="previewCourse(${courseItem.id})">Continue Learning</button>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                                <h3>${course.title}</h3>
+                                <button class="btn-ghost" id="drop-out" onclick="dropOut(${ref_student_course.id})">Drop Course</button>
                             </div>
+                            <p class="course-description">${course.description}</p>
                             
+                            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="progress-percent">Learning Progress</span>
+                                    <span class="progress-percent">${ref_student_course.progress}%</span>
+                                </div>
+                                <div class="progress-container nice">
+                                    <div class="progress-bar nice" style="width: ${ref_student_course.progress}%"></div>
+                                </div>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <button class="btn-solid" id="preview-course" onclick="previewCourse(${course.id})">Continue Learning</button>
+                                </div>
+                            </div>
                         </div>
-
                     `;
                     registeredCourses.appendChild(courseItem);
                 };
@@ -214,113 +219,97 @@ function loadMyNotes() {
         var myNotes = document.getElementsByClassName('tabs-content')[2];
         myNotes.innerHTML = '';
         
-        // 添加笔记工具栏
-        if (notes.length > 0) {
-            var notesToolbar = document.createElement('div');
-            notesToolbar.classList.add('notes-toolbar');
-            notesToolbar.innerHTML = `
-                <div class="notes-controls">
-                    <div class="search-container">
-                        <input type="text" id="noteSearchInput" placeholder="Search notes..." onkeyup="searchNotes()">
-                        <button class="search-btn" onclick="searchNotes()">🔍</button>
-                    </div>
-                    <div class="sort-container">
-                        <label>Sort by:</label>
-                        <select id="noteSortSelect" onchange="sortNotes(this.value)">
-                            <option value="time">By time</option>
-                            <option value="length">By length</option>
-                            <option value="course">By course</option>
-                        </select>
-                    </div>
-                    <div class="notes-stats">
-                        <span class="total-notes">Total ${notes.length} notes</span>
-                    </div>
-                </div>
-            `;
-            myNotes.appendChild(notesToolbar);
+        // 若存在没有时间戳的旧数据，补齐时间戳并写回（分散到近两个月内）
+        const notesNeedUpdate = notes.filter(n => !n.timestamp);
+        if (notesNeedUpdate.length > 0) {
+            const txFix = db.transaction(['notes'], 'readwrite');
+            const storeFix = txFix.objectStore('notes');
+            notesNeedUpdate.forEach((n, idx) => {
+                n.timestamp = Date.now() - 86400000 * Math.min(59, idx * 3 + 1);
+                storeFix.put(n);
+            });
         }
-        
+
         if (notes.length === 0) {
             var noNote = document.createElement('div');
             noNote.classList.add('message');
             noNote.innerHTML = `
                 <img src="images/smile.png" alt="Smile Image">
-                <p class="message">No notes yet</p>
+                <p>No notes yet. Start taking notes while watching courses!</p>
             `;
             myNotes.appendChild(noNote);
+            return;
         }
-        else {
-            notes.forEach(function (note) {
-                transaction = db.transaction(['courses'], 'readonly');
-                objectStore = transaction.objectStore('courses');
-                request = objectStore.get(note.courseId);
-                var studentId = localStorage.getItem('token');
+
+        // 添加美化后的工具栏
+        var toolbar = document.createElement('div');
+        toolbar.className = 'notes-toolbar';
+        toolbar.innerHTML = `
+            <div class="notes-controls">
+                <div class="search-container">
+                    <input type="text" id="noteSearchInput" placeholder="Search your notes..." onkeyup="searchNotes()">
+                </div>
+                <div class="sort-container">
+                    <label>Sort:</label>
+                    <select id="noteSortSelect" onchange="sortNotes(this.value)">
+                        <option value="time-desc">Newest First</option>
+                        <option value="time-asc">Oldest First</option>
+                        <option value="length-desc">Longest First</option>
+                        <option value="length-asc">Shortest First</option>
+                    </select>
+                </div>
+            </div>
+        `;
+        myNotes.appendChild(toolbar);
+
+        var listContainer = document.createElement('div');
+        listContainer.className = 'notes-list';
+        myNotes.appendChild(listContainer);
+
+        notes.forEach(function (note) {
+            var innerTx = db.transaction(['courses'], 'readonly');
+            innerTx.objectStore('courses').get(note.courseId).onsuccess = function (event) {
+                var course = event.target.result;
                 var user = JSON.parse(localStorage.getItem(studentId));
-                var avatar = user.avatar;
-                request.onsuccess = function (event) {
-                    var course = event.target.result;
-                    var noteItem = document.createElement('div');
-                    noteItem.classList.add('mynotes');
-                    noteItem.classList.add('note-card');
-                    
-                    // 格式化时间戳（如果有的话）
-                    var timeStamp = note.timestamp ? new Date(note.timestamp).toLocaleString('zh-CN') : 'Recently';
-                    
-                    // 截取笔记内容预览
-                    var notePreview = note.text.length > 120 ? note.text.substring(0, 120) + '...' : note.text;
-                    
-                    noteItem.innerHTML = `
-                        <div class="note-card-inner">
-                            <div class="note-header">
-                                <div class="note-meta">
-                                    <div class="note-author">
-                                        <img src="${avatar}" alt="User Avatar" class="avatar-small">
-                                        <div class="author-details">
-                                            <span class="author-name">${user.name || 'Me'}</span>
-                                            <span class="note-time">📅 ${timeStamp}</span>
-                                        </div>
-                                    </div>
-                                    <div class="course-badge">
-                                        <span class="course-tag">📚 ${course.title}</span>
-                                    </div>
-                                </div>
-                                <div class="note-actions">
-                                    <button class="action-btn edit-btn" onclick="editNote(${note.id})" title="Edit note">
-                                        <span class="btn-icon">✏️</span>
-                                    </button>
-                                    <button class="action-btn delete-btn" onclick="deleteNote(${note.id})" title="Delete note">
-                                        <span class="btn-icon">🗑️</span>
-                                    </button>
-                                    ${note.text.length > 120 ? `
-                                    <button class="action-btn expand-btn" onclick="toggleNoteExpansion(this)" title="Expand/Collapse">
-                                        <span class="btn-icon">📖</span>
-                                    </button>
-                                    ` : ''}
-                                </div>
-                            </div>
-                            <div class="note-body">
-                                <div class="note-content">
-                                    <div class="note-text ${note.text.length > 120 ? 'expandable' : ''}" data-full-text="${encodeURIComponent(note.text)}">
-                                        ${notePreview}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="note-footer">
-                                <div class="note-stats">
-                                    <span class="stat-item">
-                                        <span class="stat-icon">📝</span>
-                                        <span class="stat-text">${note.text.length} characters</span>
-                                    </span>
-                                </div>
-                                <div class="note-tags">
-                                    ${note.tags ? note.tags.map(tag => `<span class="tag">#${tag}</span>`).join('') : ''}
-                                </div>
+                var noteItem = document.createElement('div');
+                noteItem.classList.add('note-card', 'note-item');
+                // 数据用于排序
+                const tsRaw = note.timestamp ? new Date(note.timestamp).getTime() : (note.id || 0);
+                noteItem.dataset.time = tsRaw;
+                noteItem.dataset.length = note.text ? note.text.length : 0;
+                
+                var timeStamp = new Date(tsRaw).toLocaleString();
+                var previewText = note.text.length > 300 ? note.text.substring(0, 300) + '...' : note.text;
+                
+                noteItem.innerHTML = `
+                    <div class="note-header">
+                        <div class="note-author">
+                            <img src="${user.avatar}" class="avatar-small">
+                            <div class="author-details">
+                                <span class="author-name">${user.username}</span>
+                                <span class="note-time">${timeStamp}</span>
                             </div>
                         </div>
-                    `;
-                    myNotes.appendChild(noteItem);
-                }
-            });
+                        <span class="course-tag">📚 ${course ? course.title : 'Course'}</span>
+                        <div class="note-actions">
+                            <button onclick="editNote(${note.id})">✏️ Edit</button>
+                            <button onclick="deleteNote(${note.id})">🗑️ Delete</button>
+                        </div>
+                    </div>
+                    <div class="note-body">
+                        <div class="note-content">
+                            <p class="note-text">${previewText}</p>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(noteItem);
+            };
+        });
+
+        // 加载完成后立即按当前选择排序一次，确保下拉选项生效
+        const sortSelect = document.getElementById('noteSortSelect');
+        if (sortSelect) {
+            sortNotes(sortSelect.value);
         }
     };
 }
@@ -337,30 +326,15 @@ function loadComments() {
         var talks = document.getElementsByClassName('tabs-content')[6];
         talks.innerHTML = '';
         
-        // 添加评论工具栏
-        if (comments.length > 0) {
-            var commentsToolbar = document.createElement('div');
-            commentsToolbar.classList.add('comments-toolbar');
-            commentsToolbar.innerHTML = `
-                <div class="comments-controls">
-                    <div class="search-container">
-                        <input type="text" id="commentSearchInput" placeholder="Search comments..." onkeyup="searchComments()">
-                        <button class="search-btn" onclick="searchComments()">🔍</button>
-                    </div>
-                    <div class="sort-container">
-                        <label>Sort by:</label>
-                        <select id="commentSortSelect" onchange="sortComments(this.value)">
-                            <option value="time">By time</option>
-                            <option value="length">By length</option>
-                            <option value="course">By course</option>
-                        </select>
-                    </div>
-                    <div class="comments-stats">
-                        <span class="total-comments">Total ${comments.length} comments</span>
-                    </div>
-                </div>
-            `;
-            talks.appendChild(commentsToolbar);
+        // 如果存在旧数据没有时间戳，补齐并写回
+        const needUpdate = comments.filter(c => !c.timestamp);
+        if (needUpdate.length > 0) {
+            const txFix = db.transaction(['comments'], 'readwrite');
+            const storeFix = txFix.objectStore('comments');
+            needUpdate.forEach((c, idx) => {
+                c.timestamp = Date.now() - 86400000 * Math.min(59, idx * 3 + 1); // 分散到近两个月
+                storeFix.put(c);
+            });
         }
         
         if (comments.length === 0) {
@@ -368,83 +342,62 @@ function loadComments() {
             noComment.classList.add('message');
             noComment.innerHTML = `
                 <img src="images/smile.png" alt="Smile Image">
-                <p class="message">No comments yet</p>
+                <p>No comments yet. Join the discussion in your courses!</p>
             `;
             talks.appendChild(noComment);
+            return;
         }
-        else {
-            comments.forEach(function (comment) {
-                transaction = db.transaction(['courses'], 'readonly');
-                objectStore = transaction.objectStore('courses');
-                request = objectStore.get(comment.courseId);
-                var studentId = localStorage.getItem('token');
+
+        var toolbar = document.createElement('div');
+        toolbar.className = 'comments-toolbar';
+        toolbar.innerHTML = `
+            <div class="comments-controls">
+                <div class="search-container">
+                    <input type="text" id="commentSearchInput" placeholder="Search comments..." onkeyup="searchComments()">
+                </div>
+            </div>
+        `;
+        talks.appendChild(toolbar);
+
+        var listContainer = document.createElement('div');
+        listContainer.className = 'comments-list';
+        talks.appendChild(listContainer);
+
+        comments.forEach(function (comment) {
+            var innerTx = db.transaction(['courses'], 'readonly');
+            innerTx.objectStore('courses').get(comment.courseId).onsuccess = function (event) {
+                var course = event.target.result;
                 var user = JSON.parse(localStorage.getItem(studentId));
-                var avatar = user.avatar;
-                request.onsuccess = function (event) {
-                    var course = event.target.result;
-                    var commentItem = document.createElement('div');
-                    commentItem.classList.add('mytalks');
-                    commentItem.classList.add('comment-card');
-                    
-                    // 格式化时间戳（如果有的话）
-                    var timeStamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString('zh-CN') : 'Recently';
-                    
-                    // 截取评论内容预览
-                    var commentPreview = comment.text.length > 100 ? comment.text.substring(0, 100) + '...' : comment.text;
-                    
-                    commentItem.innerHTML = `
-                        <div class="comment-card-inner">
-                            <div class="comment-header">
-                                <div class="comment-meta">
-                                    <div class="comment-author">
-                                        <img src="${avatar}" alt="User Avatar" class="avatar-small">
-                                        <div class="author-details">
-                                            <span class="author-name">${user.name || 'Me'}</span>
-                                            <span class="comment-time">💬 ${timeStamp}</span>
-                                        </div>
-                                    </div>
-                                    <div class="course-badge">
-                                        <span class="course-tag">📚 ${course.title}</span>
-                                    </div>
-                                </div>
-                                <div class="comment-actions">
-                                    <button class="action-btn edit-btn" onclick="editComment(${comment.id})" title="Edit comment">
-                                        <span class="btn-icon">✏️</span>
-                                    </button>
-                                    <button class="action-btn delete-btn" onclick="deleteComment(${comment.id})" title="Delete comment">
-                                        <span class="btn-icon">🗑️</span>
-                                    </button>
-                                    ${comment.text.length > 100 ? `
-                                    <button class="action-btn expand-btn" onclick="toggleCommentExpansion(this)" title="Expand/Collapse">
-                                        <span class="btn-icon">💭</span>
-                                    </button>
-                                    ` : ''}
-                                </div>
-                            </div>
-                            <div class="comment-body">
-                                <div class="comment-content">
-                                    <div class="comment-text ${comment.text.length > 100 ? 'expandable' : ''}" data-full-text="${encodeURIComponent(comment.text)}">
-                                        ${commentPreview}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-footer">
-                                <div class="comment-stats">
-                                    <span class="stat-item">
-                                        <span class="stat-icon">💬</span>
-                                        <span class="stat-text">${comment.text.length} characters</span>
-                                    </span>
-                                </div>
-                                <div class="comment-tags">
-                                    ${comment.tags ? comment.tags.map(tag => `<span class="tag">#${tag}</span>`).join('') : ''}
-                                </div>
+                var commentItem = document.createElement('div');
+                commentItem.classList.add('comment-card', 'comment-item');
+                
+                const ts = comment.timestamp || comment.id || 0;
+                var timeStamp = new Date(ts).toLocaleString();
+                
+                commentItem.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <img src="${user.avatar}" class="avatar-small">
+                            <div class="author-details">
+                                <span class="author-name">${user.username}</span>
+                                <span class="comment-time">${timeStamp}</span>
                             </div>
                         </div>
-                    `;
-                    talks.appendChild(commentItem);
-                }
-            });
-        }
+                        <span class="course-tag">📚 ${course ? course.title : 'Course'}</span>
+                        <div class="comment-actions">
+                            <button onclick="editComment(${comment.id})">✏️ Edit</button>
+                            <button onclick="deleteComment(${comment.id})">🗑️ Delete</button>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <div class="comment-content">
+                            <p class="comment-text">${comment.text}</p>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(commentItem);
+            };
+        });
     };
 }
 
@@ -845,7 +798,7 @@ function searchNotes() {
     if (!searchInput) return;
     
     const searchTerm = searchInput.value.trim().toLowerCase();
-    const noteItems = document.querySelectorAll('.mynotes');
+    const noteItems = document.querySelectorAll('.note-item');
     
     noteItems.forEach(function(noteItem) {
         const noteText = noteItem.querySelector('.note-text').textContent.toLowerCase();
@@ -862,46 +815,33 @@ function searchNotes() {
 // 笔记排序功能
 function sortNotes(sortBy) {
     const notesContainer = document.getElementsByClassName('tabs-content')[2];
-    const noteItems = Array.from(notesContainer.querySelectorAll('.mynotes'));
-    
-    // 如果没有笔记项，直接返回
+    const listContainer = notesContainer.querySelector('.notes-list');
+    const noteItems = listContainer ? Array.from(listContainer.querySelectorAll('.note-item')) : [];
     if (noteItems.length === 0) return;
-    
+
     noteItems.sort(function(a, b) {
-        if (sortBy === 'time') {
-            // 提取时间文本并解析（去掉前面的emoji符号）
-            const timeA = a.querySelector('.note-time').textContent.replace('📅 ', '');
-            const timeB = b.querySelector('.note-time').textContent.replace('📅 ', '');
-            
-            // 处理"最近"这种特殊情况
-            if (timeA === 'Recently' && timeB === 'Recently') return 0;
-            if (timeA === 'Recently') return -1; // 最近的排在前面
-            if (timeB === 'Recently') return 1;
-            
-            return new Date(timeB) - new Date(timeA); // 最新在前
-        } else if (sortBy === 'length') {
-            // 修正选择器，使用正确的class名
-            const lengthA = parseInt(a.querySelector('.stat-text').textContent);
-            const lengthB = parseInt(b.querySelector('.stat-text').textContent);
-            return lengthB - lengthA; // 长的在前
-        } else if (sortBy === 'course') {
-            // 去掉前面的emoji符号
-            const courseA = a.querySelector('.course-tag').textContent.replace('📚 ', '');
-            const courseB = b.querySelector('.course-tag').textContent.replace('📚 ', '');
-            return courseA.localeCompare(courseB); // 按课程名排序
+        const ta = Number(a.dataset.time || 0);
+        const tb = Number(b.dataset.time || 0);
+        const la = Number(a.dataset.length || 0);
+        const lb = Number(b.dataset.length || 0);
+
+        switch (sortBy) {
+            case 'time-asc':
+                return ta - tb;
+            case 'time-desc':
+                return tb - ta;
+            case 'length-asc':
+                return la - lb;
+            case 'length-desc':
+                return lb - la;
+            default:
+                return tb - ta;
         }
-        return 0;
     });
-    
-    // 保留工具栏，只重新排列笔记项
-    const toolbar = notesContainer.querySelector('.notes-toolbar');
-    const messageElements = notesContainer.querySelectorAll('.message');
-    
-    // 先移除所有笔记项（保留工具栏和消息）
+
+    // 只重新排列笔记项，保持 toolbar 和容器结构不变
     noteItems.forEach(item => item.remove());
-    
-    // 重新添加排序后的笔记项
-    noteItems.forEach(item => notesContainer.appendChild(item));
+    noteItems.forEach(item => listContainer.appendChild(item));
 }
 
 // 评论相关功能函数
@@ -982,7 +922,7 @@ function searchComments() {
     if (!searchInput) return;
     
     const searchTerm = searchInput.value.trim().toLowerCase();
-    const commentItems = document.querySelectorAll('.mytalks');
+    const commentItems = document.querySelectorAll('.comment-item');
     
     commentItems.forEach(function(commentItem) {
         const commentText = commentItem.querySelector('.comment-text').textContent.toLowerCase();
@@ -1115,13 +1055,14 @@ const examsData = {
 // 渲染考试列表
 function renderExamList(exams) {
     const examListContainer = document.querySelector('.exam-list');
+    if (!examListContainer) return;
     examListContainer.innerHTML = '';
     
-    if (exams.length === 0) {
+    if (!exams || exams.length === 0) {
         examListContainer.innerHTML = `
-            <div class="no-exams">
+            <div class="message" style="grid-column: 1/-1;">
                 <img src="images/smile.png" alt="Smile Image">
-                <p>No exams yet</p>
+                <p>No exams scheduled yet.</p>
             </div>
         `;
         return;
@@ -1134,34 +1075,21 @@ function renderExamList(exams) {
             completed: "Completed"
         }[exam.status];
         
-        const statusClass = `status-${exam.status}`;
-        
         const examCard = document.createElement('div');
-        examCard.className = 'exam-card';
+        examCard.className = `exam-card status-${exam.status}`;
         examCard.innerHTML = `
-            <div class="exam-header">
-                <h3 class="exam-title">${exam.title} - ${exam.course}</h3>
-                <span class="exam-status ${statusClass}">${statusText}</span>
-            </div>
+            <div class="exam-title">${exam.title}</div>
+            <div style="font-size: 12px; font-weight: 700; color: var(--student-secondary); margin-bottom: 12px;">${exam.course}</div>
             <div class="exam-details">
-                <p><i class="far fa-calendar-alt"></i> Exam Time: ${formatDateTime(exam.startTime)} - ${formatTime(exam.endTime)}</p>
-                <p><i class="far fa-clock"></i> Duration: ${exam.duration} minutes</p>
-                <p><i class="fas fa-percentage"></i> Weight in Grade: ${exam.weight}%</p>
+                <p>📅 ${formatDateTime(exam.startTime)}</p>
+                <p>⏱️ ${exam.duration} Minutes</p>
+                <p>📊 Weight: ${exam.weight}%</p>
             </div>
-            <div class="exam-actions">
-                <button class="btn-view" data-exam-id="${exam.id}">View Details</button>
-            </div>
+            <div style="margin-top: 12px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #94a3b8;">Status: ${statusText}</div>
+            <button class="btn-view" onclick="viewExamDetails(${exam.id})">Exam Portal</button>
         `;
         
         examListContainer.appendChild(examCard);
-    });
-    
-    // 添加查看详情按钮事件
-    document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const examId = this.getAttribute('data-exam-id');
-            viewExamDetails(examId);
-        });
     });
 }
 

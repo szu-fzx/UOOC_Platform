@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -45,16 +45,25 @@
             <div class="student-profile-info">
                 <h2 id="user-name">Username</h2>
                 <p id="signature">Signature: This is my signature.</p>
+                <div class="teacher-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="course-count">0</span>
+                        <span class="stat-label">Courses</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="student-count">0</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="student-profile-body" style="width: 60%;">
+    <div class="student-profile-body">
         <div class="sidebar">
-            <a class="sidebar-item" href="#courses">My Courses</a>
-            <a class="sidebar-item" href="#courseManager">Publish Course</a>
-            <!-- <a class="sidebar-item" href="#exams">Publish Exam</a> -->
-            <a class="sidebar-item" href="#student">Manage Students</a>
+            <a class="sidebar-item" href="#courses"><i class="fas fa-book-open"></i> My Courses</a>
+            <a class="sidebar-item" href="#courseManager"><i class="fas fa-plus-circle"></i> Publish Course</a>
+            <a class="sidebar-item" href="#student"><i class="fas fa-user-graduate"></i> Manage Students</a>
         </div>
         <div class="content">
 
@@ -103,8 +112,12 @@
                                     
                                     <label>Carousel Images:</label>
                                     <div id="carouselContainer" class="carousel-container"></div>
-                                    <input type="file" id="carouselImageInput" accept="image/*" multiple>
-                                    <button type="button" onclick="addCarouselImages()">Add Images</button>
+                                    <div class="custom-file-wrapper">
+                                        <input type="file" id="carouselImageInput" accept="image/*" multiple style="display: none;" onchange="updateFileName(this, 'carousel-file-name')">
+                                        <label for="carouselImageInput" class="btn-custom-file">Browse Images</label>
+                                        <span id="carousel-file-name" class="file-name-display">No file chosen</span>
+                                        <button type="button" class="btn-action-main" onclick="addCarouselImages()">Add to Carousel</button>
+                                    </div>
                                     <div class="form-group-checkbox">
                                         <label for="enableComments">Enable Course Comments:</label>
                                         <input type="checkbox" id="enableComments" name="enableComments">
@@ -118,8 +131,12 @@
                                 <h2>Add Courseware</h2>
                                 <div class="form-group">
                                     <label for="coursewareFile">Upload Courseware:</label>
-                                    <input type="file" id="coursewareFile" multiple>
-                                    <button type="button" onclick="saveCourseware()">Save Courseware</button>
+                                    <div class="custom-file-wrapper">
+                                        <input type="file" id="coursewareFile" multiple style="display: none;" onchange="updateFileName(this, 'courseware-file-name')">
+                                        <label for="coursewareFile" class="btn-custom-file">Browse Courseware</label>
+                                        <span id="courseware-file-name" class="file-name-display">No file chosen</span>
+                                        <button type="button" class="btn-action-main" onclick="saveCourseware()">Save to Cloud</button>
+                                    </div>
                                     <div id="courseware">
                                         <ul id="savedCoursewares"></ul>
                                     </div>
@@ -132,7 +149,7 @@
                                     <label for="newAssignment">Assignment Requirements:</label>
                                     <textarea id="newAssignment" name="newAssignment"></textarea>
                                     <label for="assignmentDeadline">Deadline:</label>
-                                    <input type="datetime-local" id="assignmentDeadline" name="assignmentDeadline">
+                                    <input type="datetime-local" id="assignmentDeadline" name="assignmentDeadline" lang="en">
                                     <button type="button" onclick="addAssignment()">Assign Homework</button>
                                     <div id="assignmentsContainer"></div>
                                 </div>
@@ -161,12 +178,13 @@
                 <div class="tabs-content">
                     <!-- 上传文件导入区域 -->
                     <div class="import-exam-file" style="display: block;">
-                        <div class="upload-area">
+                        <div class="upload-area" onclick="document.getElementById('examFileInput').click()">
                             <img src="images/upload.png" alt="Upload Image">
                             <p class="upload-text">Drag and drop files here or click to upload</p>
                             <p class="upload-hint">Supports Excel (.xlsx, .xls) or JSON format</p>
-                            <input type="file" id="examFileInput" accept=".xlsx,.xls,.json" />
+                            <input type="file" id="examFileInput" accept=".xlsx,.xls,.json" style="display: none;" onchange="updateFileName(this, 'exam-file-info-display')" />
                             <div class="file-info" id="fileInfo"></div>
+                            <p id="exam-file-info-display" class="text-muted small mt-2">No file chosen</p>
                         </div>
                         <div class="exam-preview" id="examPreview" style="display: none;">
                             <h3>Exam Preview</h3>
@@ -338,11 +356,11 @@
     <!--设置访问权限,只有老师可以登录该页面-->
     <script>
         if (!localStorage.getItem('token')) {
-            alert('请先登录！');
+            alert('Please login first!');
             window.location.href = '../account/login.html';
         }
         else if (localStorage.getItem('token') !== 'teacher') {
-            alert('您无权访问此页面！');
+            alert('You do not have permission to access this page!');
             window.location.href = '../account/login.html';
         }
     </script>
@@ -351,13 +369,26 @@
         let user = JSON.parse(localStorage.getItem(userid));
         document.getElementById('avatar').src = user.avatar;
         document.getElementById('user-name').innerText = user.username;
-        //如果签名为空，显示"还没有设置签名"
+        //如果签名为空，显示"No signature set yet"
         if (user.signature === '') {
             document.getElementById('signature').innerText = 'No signature set yet';
         }
         else {
             document.getElementById('signature').innerText = 'Signature: ' + user.signature;
         }
+
+        // 更新统计数据
+        function updateTeacherStats() {
+            // 获取课程数量
+            const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+            const teacherCourses = courses.filter(c => c.teacher_id == userid || c.teacher == user.username);
+            document.getElementById('course-count').innerText = teacherCourses.length;
+
+            // 获取学生数量 (模拟，或者从相关逻辑获取)
+            const students = getStudents();
+            document.getElementById('student-count').innerText = students.length;
+        }
+        updateTeacherStats();
     </script>
     <script>
         //渲染,利用map和join方法来渲染表格
@@ -710,6 +741,21 @@ function previewManualExam() {
     
     document.getElementById('examPreview').style.display = 'block';
 }
+    </script>
+    <script>
+        // Helper function to update custom file name display
+        function updateFileName(input, displayId) {
+            const display = document.getElementById(displayId);
+            if (input.files && input.files.length > 0) {
+                if (input.files.length === 1) {
+                    display.textContent = input.files[0].name;
+                } else {
+                    display.textContent = input.files.length + ' files selected';
+                }
+            } else {
+                display.textContent = 'No file chosen';
+            }
+        }
     </script>
     
     <!-- AI助手悬浮按钮 -->

@@ -2,48 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>课程预览</title>
+    <title>Course Preview</title>
     <link rel="stylesheet" href="course.css">
     <link rel="stylesheet" href="../header-footer/common.css">
     <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
 </head>
 <body>
 
-    <!-- 页眉 -->
+    <!-- Header -->
     <header class="navbar">
         <div class="nav">
             <div class="logo">
-                <a href="#home"><img src="../header-footer/images/logo.png" alt="优课联盟"></a>
+                <a href="#home"><img src="../header-footer/images/logo.png" alt="UOOC Alliance"></a>
             </div>
             <nav>
                 <ul>
-                    <!-- TODO 补充链接 -->
-                    <li><a href="../Homepage/WebsiteHomepage.html">首页</a></li>
-                    <li><a href="../Homepage/courseList.html">课程</a></li>
-                    <li><a href="../Homepage/league.html">联盟院校</a></li>
-                    <li><a href="../Homepage/about-us.html">关于我们</a></li>
+                    <!-- TODO Add links -->
+                    <li><a href="../Homepage/WebsiteHomepage.html">Home</a></li>
+                    <li><a href="../Homepage/courseList.html">Courses</a></li>
+                    <li><a href="../Homepage/league.html">Alliance Universities</a></li>
+                    <li><a href="../Homepage/about-us.html">About Us</a></li>
                 </ul>
             </nav>
         </div>
         <div class="info">
-            <!-- TODO 补充链接 -->
+            <!-- TODO Add links -->
         </div>
     </header>
     
-    <!-- 主体 -->
+    <!-- Main -->
     <div class="main-wrapper">
         <div class="container">
             <div id="coursePreview">
-                <!-- 课程预览内容将在这里显示 -->
+                <!-- Course preview content will be displayed here -->
 
             </div>
         </div>
         <div class="container">
             <div id="otherMessage">
             <div class="tabs">
-                <a class="tabs-item" href="#tasks/Intro">课程简介</a>
-                <a class="tabs-item" href="#tasks/comment">课程评论</a>
-                <a class="tabs-item" href="#tasks/note">课程笔记</a>
+                <a class="tabs-item" href="#tasks/Intro">Course Intro</a>
+                <a class="tabs-item" href="#tasks/comment">Course Comments</a>
+                <a class="tabs-item" href="#tasks/note">Course Notes</a>
             </div>
             <div class="tabs-content">
                 
@@ -70,23 +70,23 @@
     </div>
     </div>
     
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
-                <a href="#home"><img src="../header-footer/images/logo.png" alt="优课联盟"></a>
+                <a href="#home"><img src="../header-footer/images/logo.png" alt="UOOC Alliance"></a>
             </div>
             <div class="footer-text">
                 <nav class="footer-nav">
                     <ul>
-                        <li><a href="#about">关于我们</a></li>
-                        <li><a href="#contact">联系我们</a></li>
-                        <li><a href="#privacy">隐私政策</a></li>
-                        <li><a href="#terms">服务条款</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
                     </ul>
                 </nav>
                 <div class="footer-info">
-                    <p>&copy; 2025 优课联盟. 保留所有权利.</p>
+                    <p>&copy; 2025 UOOC Alliance. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -96,32 +96,48 @@
     <script src="../account/account.js"></script>
     <script src="course.js"></script>
     <script>
-        //根据token获取用户信息
+        // Get user info by token
         window.onload = function() {
             const userid = localStorage.getItem('token');
-            //如果有用户登录，在info的div中显示用户头像，如果没用，显示登录注册按钮
+            // If user is logged in, show avatar in .info div, else show login/register buttons
             if(userid) {
                 const user = JSON.parse(localStorage.getItem(userid));
+                let profileUrl = '';
+                let profileName = '';
+                let accountUrl = '';
+                if (userid === 'admin') {
+                    profileUrl = '../account/admin-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/admin-profile.html';
+                } else if (userid === 'teacher') {
+                    profileUrl = '../teacher/teacher-profile.html';
+                    profileName = 'Profile Center';
+                    accountUrl = '../account/teacher-setting.html';
+                } else {
+                    profileUrl = '../student/student-profile.html';
+                    profileName = 'My Learning';
+                    accountUrl = '../account/student-setting.html';
+                }
                 document.querySelector('.info').innerHTML = `
-                    <a href="#study"><img id="user-head" src="${user.avatar}" alt="用户头像"></a>
+                    <a href="${profileUrl}"><img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
                     <div class="card">
                         <ul>
-                            <li><a href="../student/">我的学习</a></li>
-                            <li><a href="../account/student-setting.html">账号设置</a></li>
-                            <li><a id="logout" href="#logout">退出登录</a></li>
+                            <li><a href="${profileUrl}">${profileName}</a></li>
+                            <li><a href="${accountUrl}">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
                         </ul>
                     </div>
                 `;
-                //如果点击退出登录，清除token
+                // If click logout, clear token
                 document.getElementById('logout').addEventListener('click', () => {
                     localStorage.removeItem('token');
-                    location.reload();
+                    window.location.href = '../Homepage/WebsiteHomepage.html';
                 });
             }
             else{
                 document.querySelector('.info').innerHTML = `
-                    <a href="../account/login.html"><button class="login">登录</button></a>
-                    <a href="../account/register.html"><button class="register">注册</button></a>
+                    <a href="../account/login.html"><button class="login">Login</button></a>
+                    <a href="../account/register.html"><button class="register">Register</button></a>
                 `;
             }
         }

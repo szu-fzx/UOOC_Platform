@@ -70,7 +70,7 @@ function publishCourse() {
             const errorElement = document.createElement('div');
             errorElement.id = 'titleError';
             errorElement.style.color = 'red';
-            errorElement.textContent = '课程标题为必填项';
+            errorElement.textContent = 'Course title is required';
             document.getElementById('courseTitle').insertAdjacentElement('afterend', errorElement);
         }
         return;
@@ -119,10 +119,10 @@ function publishCourse() {
             let request=null;
             if(flag){
                 request = objectStore.put(course);
-                alert('修改成功');
+                alert('Modified successfully');
             }else {
                 request = objectStore.add(course);
-                alert('发布成功');
+                alert('Published successfully');
             }
             
             // transaction = db.transaction(['courses'], 'readwrite');
@@ -683,8 +683,8 @@ function displayAssignments() {
         assignmentItem.innerHTML = `
             <h3>${assignment.title}</h3>
             <p>${assignment.text}</p>
-            <p>截止时间: ${new Date(assignment.deadline).toLocaleString()}</p>
-            <button onclick="removeAssignment(${assignment.id})">删除</button>
+            <p>Deadline: ${new Date(assignment.deadline).toLocaleString()}</p>
+            <button onclick="removeAssignment(${assignment.id})">Delete</button>
         `;
         assignmentsContainer.appendChild(assignmentItem);
     });
@@ -699,9 +699,9 @@ function removeAssignment(assignmentId) {
 function saveCourseware() {
     const input = document.getElementById('coursewareFile');
     const files = input.files;
-    const categoryPath = prompt('请输入文件分类路径（例如：数学/图片）：');
+    const categoryPath = prompt('Please enter the file category path (e.g., Math/Images):');
     if (!categoryPath) {
-        alert('分类路径不能为空');
+        alert('Category path cannot be empty');
         return;
     }
 
@@ -909,8 +909,8 @@ function loadCoursesByTeacher() {
             const noCourse = document.createElement('div');
             noCourse.classList.add('message');
             noCourse.innerHTML = `
-                <img src="../student/images/smile.png" alt="笑脸图片">
-                <p class="message">目前还没有任何课程</p>
+                <img src="../student/images/smile.png" alt="Smile">
+                <p class="message">No courses yet</p>
             `;
             coursesContainer.appendChild(noCourse);
         } else {
@@ -919,24 +919,24 @@ function loadCoursesByTeacher() {
                 courseItem.className = 'teach';
                 courseItem.id = course.id;
                 courseItem.innerHTML = `
-                    <div class="course-image"><img src="${course.carouselImages[0]}" alt="课程封面"></div>
+                    <div class="course-image"><img src="${course.carouselImages[0]}" alt="Course Cover"></div>
                     <div class="course-info">
                         <div class="course-actions">
-                            <a href="#editCourse" onclick="editCourse(${course.id})">修改课程</a>
-                            <a href="#deleteCourse" onclick="deleteCourse(${course.id},true)">删除课程</a>
+                            <a href="#editCourse" onclick="editCourse(${course.id})">Edit Course</a>
+                            <a href="#deleteCourse" onclick="deleteCourse(${course.id},true)">Delete Course</a>
                         </div>
                         <h2>${course.title}</h2>
                         <p class="course-description">${course.description}</p>
-                        <button class="viewCourse" onclick="viewCourse(${course.id})">查看详情</button>
+                        <button class="viewCourse" onclick="viewCourse(${course.id})">View Details</button>
                         <div class="showMessage">
                             <button onclick="showRegisteredStudents(${course.id})">+</button>
-                            <span>查看注册学生</span>
+                            <span>View Registered Students</span>
                             <div id="register_students"></div>
                         </div>
                         <div id="assignmentsContainer"></div>
                         <div class="showMessage">
                             <button onclick="showSubmittedAssignments(${course.id})">+</button>
-                            <span>查看作业提交情况</span>
+                            <span>View Submitted Assignments</span>
                             <div id="submit_assignments"></div>
                         </div>
                     </div>
@@ -972,7 +972,7 @@ function showRegisteredStudents(courseId) {
         students.forEach(student => {
             const studentInfo = JSON.parse(localStorage.getItem(student.studentId));
             const listItem = document.createElement('li');
-            listItem.textContent = `姓名: ${studentInfo.username}, 学号: ${studentInfo.userid}`;
+            listItem.textContent = `Name: ${studentInfo.username}, Student ID: ${studentInfo.userid}`;
             studentListContainer.appendChild(listItem);
         });
         courseItem.innerHTML = '';
@@ -1004,9 +1004,9 @@ function showSubmittedAssignments(courseId) {
             const listItem = document.createElement('li');
             let studentDetails = assignment.studentId.map(studentId => {
                 const studentInfo = JSON.parse(localStorage.getItem(studentId));
-                return `姓名: ${studentInfo.username}, 学号: ${studentInfo.userid}`;
+                return `Name: ${studentInfo.username}, Student ID: ${studentInfo.userid}`;
             }).join('; ');
-            listItem.textContent = `作业名称: ${assignment.title}, 提交学生: ${studentDetails}`;
+            listItem.textContent = `Assignment Name: ${assignment.title}, Submitted Students: ${studentDetails}`;
             assignmentListContainer.appendChild(listItem);
         });
 
@@ -1054,7 +1054,7 @@ function showSubmittedAssignments(courseId) {
 
 function displayAssignmentsDB(courseId) {
     const assignmentsContainer = document.querySelector(`#courses .teach[id="${courseId}"] #assignmentsContainer`);
-    assignmentsContainer.innerHTML = '<button id="toggle" onclick="toggleAssignmentsContent(this)">+</button><span>查看作业</span>';
+    assignmentsContainer.innerHTML = '<button id="toggle" onclick="toggleAssignmentsContent(this)">+</button><span>View Assignments</span>';
 
     const transaction = db.transaction(['assignments'], 'readonly');
     const objectStore = transaction.objectStore('assignments');
@@ -1070,8 +1070,8 @@ function displayAssignmentsDB(courseId) {
             assignmentItem.innerHTML = `
                 <h3>${assignment.title}</h3>
                 <p>${assignment.text}</p>
-                <p>截止时间: ${new Date(assignment.deadline).toLocaleString()}</p>
-                <button onclick="removeAssignmentDB(${assignment.id},${courseId})">删除</button>
+                <p>Deadline: ${new Date(assignment.deadline).toLocaleString()}</p>
+                <button onclick="removeAssignmentDB(${assignment.id},${courseId})">Delete</button>
             `;
             assignmentsContainer.appendChild(assignmentItem);
         });
@@ -1110,7 +1110,7 @@ function removeAssignmentDB(assignmentId,courseId) {
 function searchCourses() {
     const searchInput = document.getElementById('searchInput').value.trim();
     if (!searchInput) {
-        alert('请输入搜索关键词');
+        alert('Please enter search keywords');
         document.getElementById('searchInput').focus();
         return;
     }

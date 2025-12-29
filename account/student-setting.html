@@ -48,104 +48,101 @@
         <div class="tab-content" id="myTabContent">
             <!-- Basic Info -->
             <div class="tab-pane fade show active" id="info-tab-pane" role="tabpanel" aria-labelledby="info-tab" tabindex="0">
-                <form id="profile-form" class="profile-form p-4">
+                <form id="profile-form" class="profile-form">
                     <!-- Avatar -->
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Avatar</label>
-                        <div id="avatar-container" class="position-relative" style="width: 100px; height: 100px;padding: 0;">
-                            <img id="avatar-img" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div id="avatar-overlay" class="position-absolute top-0 start-0 w-100 h-100 rounded-circle d-flex justify-content-center align-items-center">
-                                <i class="bi bi-camera-fill text-white fs-3"></i>
+                    <div class="mb-4 text-center">
+                        <div id="avatar-container" class="mx-auto">
+                            <img id="avatar-img" src="../header-footer/images/user-head.jpg">
+                            <div id="avatar-overlay">
+                                <i class="bi bi-camera-fill"></i>
                             </div>
                             <input type="file" id="change-avatar" style="display:none;" accept="image/*" />
                         </div>
+                        <p class="text-muted small mt-2">Click to change avatar</p>
                     </div>
-            
-                    <!-- User ID -->
-                    <div class="mb-3 row">
-                        <label for="userid" class="col-sm-2 col-form-label">User ID:</label>
-                        <div class="col-sm-10">
-                            <span id="userid" class="form-control-plaintext"></span>
+
+                    <div class="row g-4">
+                        <!-- User ID -->
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="bi bi-hash me-2"></i>Student ID</label>
+                            <div class="form-control-plaintext" id="userid"></div>
                         </div>
-                    </div>
-                    <!-- Nickname -->
-                    <div class="mb-3 row">
-                        <label for="username" class="col-sm-2 col-form-label">* Nickname:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="username" required>
+
+                        <!-- Nickname -->
+                        <div class="col-md-6">
+                            <label for="username" class="form-label"><i class="bi bi-person me-2"></i>Nickname</label>
+                            <input type="text" class="form-control" id="username" required placeholder="Your nickname">
                         </div>
-                    </div>
-                    <!-- Gender -->
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">* Gender:</label>
-                        <div class="col-sm-10">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="man" type="radio" name="gender" value="Male">
-                                <label class="form-check-label" for="man">Male</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="woman" type="radio" name="gender" value="Female">
-                                <label class="form-check-label" for="woman">Female</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="unknown" type="radio" name="gender" value="Prefer not to say">
-                                <label class="form-check-label" for="unknown">Prefer not to say</label>
+
+                        <!-- Gender -->
+                        <div class="col-md-12">
+                            <label class="form-label d-block"><i class="bi bi-gender-ambiguous me-2"></i>Gender</label>
+                            <div class="d-flex">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="man" type="radio" name="gender" value="Male">
+                                    <label class="form-check-label" for="man">Male</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="woman" type="radio" name="gender" value="Female">
+                                    <label class="form-check-label" for="woman">Female</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="unknown" type="radio" name="gender" value="Prefer not to say">
+                                    <label class="form-check-label" for="unknown">Private</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Phone -->
-                    <div class="mb-3 row">
-                        <label for="phone" class="col-sm-2 col-form-label">* Phone:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="phone" required>
+
+                        <!-- Phone -->
+                        <div class="col-md-12">
+                            <label for="phone" class="form-label"><i class="bi bi-telephone me-2"></i>Phone Number</label>
+                            <input type="text" class="form-control" id="phone" required placeholder="Your phone number">
                             <span id="ph-error-message" class="text-danger"></span>
                         </div>
-                    </div>
-                    <!-- Signature -->
-                    <div class="mb-3 row">
-                        <label for="signature" class="col-sm-2 col-form-label">Signature:</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" id="signature" placeholder="Enter your signature"></textarea>
+
+                        <!-- Signature -->
+                        <div class="col-md-12">
+                            <label for="signature" class="form-label"><i class="bi bi-chat-dots me-2"></i>Signature</label>
+                            <textarea class="form-control" id="signature" rows="3" placeholder="Write a short bio or signature..."></textarea>
                         </div>
-                    </div>
-                    <!-- Save Button -->
-                    <div class="mb-3 row">
-                        <div class="col-sm-10 offset-sm-2">
-                            <button type="submit" class="btn btn-primary">Save</button>
+
+                        <!-- Save Button -->
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-check-lg me-2"></i>Save Basic Info
+                            </button>
                             <div id="success-message" class="mt-3 alert alert-success" style="display: none;"></div>
                         </div>
                     </div>
                 </form>
             </div>
+
             <!-- Change Password -->
             <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
-                <form id="reset-password-form" class="profile-form p-4">
-                    <div class="mb-3 row">
-                        <label for="old-password" class="col-sm-3 col-form-label">Old Password:</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="old-password" placeholder="Enter old password" required>
-                            <span id="op-error-message" class="text-danger"></span>
-                        </div>
+                <form id="reset-password-form" class="profile-form max-width-500 mx-auto">
+                    <div class="mb-4">
+                        <label for="old-password" class="form-label"><i class="bi bi-shield-lock me-2"></i>Current Password</label>
+                        <input type="password" class="form-control" id="old-password" placeholder="••••••••" required>
+                        <span id="op-error-message" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="password" class="col-sm-3 col-form-label">New Password:</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password" placeholder="Enter new password" required>
-                            <span id="pa-error-message" class="text-danger"></span>
-                        </div>
+                    
+                    <div class="mb-4">
+                        <label for="password" class="form-label"><i class="bi bi-key me-2"></i>New Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                        <span id="pa-error-message" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="confirm-password" class="col-sm-3 col-form-label">Confirm New Password:</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="confirm-password" placeholder="Re-enter new password" required>
-                            <span id="cp-error-message" class="text-danger"></span>
-                        </div>
+                    
+                    <div class="mb-4">
+                        <label for="confirm-password" class="form-label"><i class="bi bi-key-fill me-2"></i>Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirm-password" placeholder="••••••••" required>
+                        <span id="cp-error-message" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 row">
-                        <div class="col-sm-9 offset-sm-3">
-                            <button type="submit" class="btn btn-primary">Confirm</button>
-                            <div id="success-message-password" class="mt-3 alert alert-success" style="display: none;"></div>
-                        </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-shield-check me-2"></i>Update Password
+                        </button>
+                        <div id="success-message-password" class="mt-3 alert alert-success" style="display: none;"></div>
                     </div>
                 </form>
             </div>

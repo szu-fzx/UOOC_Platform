@@ -9,86 +9,6 @@
     <link rel="shortcut icon" href="../header-footer/images/ico.png" type="image/x-icon">
     <link rel="stylesheet" href="../header-footer/common.css">
     <link rel="stylesheet" href="account-styles.css">
-    <style>
-        .main-content {
-            min-height: calc(100vh - 200px);
-        }
-        .profile-form {
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        #avatar-container {
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-        #avatar-container:hover {
-            opacity: 0.8;
-        }
-        #avatar-overlay {
-            background: rgba(0,0,0,0.5);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        #avatar-container:hover #avatar-overlay {
-            opacity: 1;
-        }
-        .student-table {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #007bff;
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-        .action-btn {
-            margin: 0 2px;
-            padding: 4px 8px;
-            font-size: 12px;
-            border-radius: 4px;
-            text-decoration: none;
-        }
-        .action-btn:hover {
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -129,101 +49,87 @@
         <div class="tab-content" id="teacherTabContent">
             <!-- Profile -->
             <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <form id="profile-form" class="profile-form p-4">
+                <form id="profile-form" class="profile-form">
                     <!-- Avatar -->
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Avatar</label>
-                        <div id="avatar-container" class="position-relative" style="width: 100px; height: 100px;padding: 0;">
-                            <img id="avatar-img" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div id="avatar-overlay" class="position-absolute top-0 start-0 w-100 h-100 rounded-circle d-flex justify-content-center align-items-center">
-                                <i class="bi bi-camera-fill text-white fs-3"></i>
+                    <div class="mb-4 text-center">
+                        <div id="avatar-container" class="mx-auto">
+                            <img id="avatar-img" src="../header-footer/images/user-head.jpg">
+                            <div id="avatar-overlay">
+                                <i class="bi bi-camera-fill"></i>
                             </div>
                             <input type="file" id="change-avatar" style="display:none;" accept="image/*" />
                         </div>
+                        <p class="text-muted small mt-2">Click to change avatar</p>
                     </div>
 
-                    <!-- Teacher ID -->
-                    <div class="mb-3 row">
-                        <label for="teacher-id" class="col-sm-2 col-form-label">Teacher ID:</label>
-                        <div class="col-sm-10">
-                            <span id="teacher-id" class="form-control-plaintext"></span>
+                    <div class="row g-4">
+                        <!-- Teacher ID -->
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="bi bi-hash me-2"></i>Teacher ID</label>
+                            <div class="form-control-plaintext" id="teacher-id"></div>
                         </div>
-                    </div>
 
-                    <!-- Name -->
-                    <div class="mb-3 row">
-                        <label for="teacher-name" class="col-sm-2 col-form-label">* Name:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="teacher-name" required>
+                        <!-- Name -->
+                        <div class="col-md-6">
+                            <label for="teacher-name" class="form-label"><i class="bi bi-person me-2"></i>Full Name</label>
+                            <input type="text" class="form-control" id="teacher-name" required placeholder="Enter your name">
                         </div>
-                    </div>
 
-                    <!-- Gender -->
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">* Gender:</label>
-                        <div class="col-sm-10">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="male" type="radio" name="gender" value="Male">
-                                <label class="form-check-label" for="male">Male</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="female" type="radio" name="gender" value="Female">
-                                <label class="form-check-label" for="female">Female</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="private" type="radio" name="gender" value="Prefer not to say">
-                                <label class="form-check-label" for="private">Prefer not to say</label>
+                        <!-- Gender -->
+                        <div class="col-md-12">
+                            <label class="form-label d-block"><i class="bi bi-gender-ambiguous me-2"></i>Gender</label>
+                            <div class="d-flex">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="male" type="radio" name="gender" value="Male">
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="female" type="radio" name="gender" value="Female">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="private" type="radio" name="gender" value="Prefer not to say">
+                                    <label class="form-check-label" for="private">Private</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Phone -->
-                    <div class="mb-3 row">
-                        <label for="teacher-phone" class="col-sm-2 col-form-label">* Phone:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="teacher-phone" required>
+                        <!-- Phone -->
+                        <div class="col-md-6">
+                            <label for="teacher-phone" class="form-label"><i class="bi bi-telephone me-2"></i>Phone Number</label>
+                            <input type="text" class="form-control" id="teacher-phone" required placeholder="Enter phone number">
                             <span id="phone-error-message" class="text-danger"></span>
                         </div>
-                    </div>
 
-                    <!-- Email -->
-                    <div class="mb-3 row">
-                        <label for="teacher-email" class="col-sm-2 col-form-label">Email:</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="teacher-email">
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label for="teacher-email" class="form-label"><i class="bi bi-envelope me-2"></i>Email Address</label>
+                            <input type="email" class="form-control" id="teacher-email" placeholder="Enter email address">
                             <span id="email-error-message" class="text-danger"></span>
                         </div>
-                    </div>
 
-                    <!-- School -->
-                    <div class="mb-3 row">
-                        <label for="teacher-school" class="col-sm-2 col-form-label">School:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="teacher-school">
+                        <!-- School -->
+                        <div class="col-md-6">
+                            <label for="teacher-school" class="form-label"><i class="bi bi-building me-2"></i>University / School</label>
+                            <input type="text" class="form-control" id="teacher-school" placeholder="Enter school name">
                         </div>
-                    </div>
 
-                    <!-- Subject -->
-                    <div class="mb-3 row">
-                        <label for="teacher-subject" class="col-sm-2 col-form-label">Subject:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="teacher-subject">
+                        <!-- Subject -->
+                        <div class="col-md-6">
+                            <label for="teacher-subject" class="form-label"><i class="bi bi-book me-2"></i>Subject</label>
+                            <input type="text" class="form-control" id="teacher-subject" placeholder="Enter teaching subject">
                         </div>
-                    </div>
 
-                    <!-- Bio -->
-                    <div class="mb-3 row">
-                        <label for="teacher-bio" class="col-sm-2 col-form-label">Bio:</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" id="teacher-bio" rows="4" placeholder="Enter your bio"></textarea>
+                        <!-- Bio -->
+                        <div class="col-md-12">
+                            <label for="teacher-bio" class="form-label"><i class="bi bi-chat-quote me-2"></i>Biography</label>
+                            <textarea class="form-control" id="teacher-bio" rows="4" placeholder="Write something about yourself..."></textarea>
                         </div>
-                    </div>
 
-                    <!-- Save Button -->
-                    <div class="mb-3 row">
-                        <div class="col-sm-10 offset-sm-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-circle me-2"></i>Save
+                        <!-- Save Button -->
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-check-lg me-2"></i>Save Profile Changes
                             </button>
                             <div id="profile-success-message" class="mt-3 alert alert-success" style="display: none;"></div>
                         </div>
@@ -233,35 +139,30 @@
 
             <!-- Change Password -->
             <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
-                <form id="reset-password-form" class="profile-form p-4">
-                    <div class="mb-3 row">
-                        <label for="old-password" class="col-sm-3 col-form-label">Old Password:</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="old-password" placeholder="Enter old password" required>
-                            <span id="old-password-error" class="text-danger"></span>
-                        </div>
+                <form id="reset-password-form" class="profile-form max-width-500 mx-auto">
+                    <div class="mb-4">
+                        <label for="old-password" class="form-label"><i class="bi bi-shield-lock me-2"></i>Current Password</label>
+                        <input type="password" class="form-control" id="old-password" placeholder="••••••••" required>
+                        <span id="old-password-error" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="new-password" class="col-sm-3 col-form-label">New Password:</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="new-password" placeholder="Enter new password" required>
-                            <span id="new-password-error" class="text-danger"></span>
-                        </div>
+                    
+                    <div class="mb-4">
+                        <label for="new-password" class="form-label"><i class="bi bi-key me-2"></i>New Password</label>
+                        <input type="password" class="form-control" id="new-password" placeholder="••••••••" required>
+                        <span id="new-password-error" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="confirm-new-password" class="col-sm-3 col-form-label">Confirm New Password:</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="confirm-new-password" placeholder="Re-enter new password" required>
-                            <span id="confirm-password-error" class="text-danger"></span>
-                        </div>
+                    
+                    <div class="mb-4">
+                        <label for="confirm-new-password" class="form-label"><i class="bi bi-key-fill me-2"></i>Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirm-new-password" placeholder="••••••••" required>
+                        <span id="confirm-password-error" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 row">
-                        <div class="col-sm-9 offset-sm-3">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-shield-check me-2"></i>Confirm
-                            </button>
-                            <div id="password-success-message" class="mt-3 alert alert-success" style="display: none;"></div>
-                        </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-shield-check me-2"></i>Update Password
+                        </button>
+                        <div id="password-success-message" class="mt-3 alert alert-success" style="display: none;"></div>
                     </div>
                 </form>
             </div>
@@ -300,7 +201,6 @@
         window.onload = function() {
             initializeUserInfo();
             initializeTeacherProfile();
-            loadStudentData();
         }
 
         // 初始化用户信息显示
@@ -309,12 +209,12 @@
             if(userid) {
                 const user = JSON.parse(localStorage.getItem(userid));
                 document.querySelector('.info').innerHTML = `
-                    <a href="../teacher/teacher-profile.html"><img id="user-head" src="${user.avatar}" alt="用户头像"></a>
+                    <a href="../teacher/teacher-profile.html"><img id="user-head" src="${user.avatar}" alt="User Avatar"></a>
                     <div class="card">
                         <ul>
-                            <li><a href="../teacher/teacher-profile.html">我的教学</a></li>
-                            <li><a href="../account/teacher-setting.html">账号设置</a></li>
-                            <li><a id="logout" href="#logout">退出登录</a></li>
+                            <li><a href="../teacher/teacher-profile.html">Profile Center</a></li>
+                            <li><a href="../account/teacher-setting.html">Account Settings</a></li>
+                            <li><a id="logout" href="#logout">Logout</a></li>
                         </ul>
                     </div>
                 `;
@@ -329,7 +229,7 @@
                     <a href="../account/register.html"><button class="register">注册</button></a>
                 `;
                 // 如果没有登录，跳转到登录页面
-                alert('请先登录！');
+                alert('Please login first!');
                 window.location.href = '../account/login.html';
             }
         }
@@ -348,9 +248,9 @@
             document.getElementById('teacher-name').value = teacher.username || '';
             
             // 设置性别单选框
-            if(teacher.gender === '男') {
+            if(teacher.gender === 'Male' || teacher.gender === 'Male') {
                 document.getElementById('male').checked = true;
-            } else if(teacher.gender === '女') {
+            } else if(teacher.gender === 'Female' || teacher.gender === 'Female') {
                 document.getElementById('female').checked = true;
             } else {
                 document.getElementById('private').checked = true;
@@ -361,104 +261,6 @@
             document.getElementById('teacher-school').value = teacher.school || '';
             document.getElementById('teacher-subject').value = teacher.subject || '';
             document.getElementById('teacher-bio').value = teacher.bio || '';
-            
-            // 设置学生注册开关
-            document.getElementById('allow-register').checked = teacher.allowRegister || false;
-        }
-
-        // 加载学生数据
-        function loadStudentData() {
-            const students = getStudents();
-            renderStudentTable(students);
-        }
-
-        // 获取所有学生数据
-        function getStudents() {
-            const students = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('2')) { // 学生ID以2开头
-                    const student = JSON.parse(localStorage.getItem(key));
-                    if(student && student.userType === 'student') {
-                        students.push(student);
-                    }
-                }
-            }
-            return students;
-        }
-
-        // 渲染学生表格
-        function renderStudentTable(students) {
-            const tbody = document.getElementById('students-tbody');
-            const noStudents = document.getElementById('no-students');
-            
-            if(students.length === 0) {
-                tbody.innerHTML = '';
-                noStudents.style.display = 'block';
-                return;
-            }
-            
-            noStudents.style.display = 'none';
-            const rows = students.map((student, index) => {
-                const statusBadge = student.status !== false ? 
-                    '<span class="badge bg-success">正常</span>' : 
-                    '<span class="badge bg-danger">禁用</span>';
-                    
-                return `
-                    <tr>
-                        <td>${student.userid}</td>
-                        <td>${student.username}</td>
-                        <td>${student.gender || '未知'}</td>
-                        <td>${student.phone || '未填写'}</td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-warning action-btn" onclick="resetStudentPassword('${student.userid}')">
-                                <i class="bi bi-key"></i> 重置密码
-                            </button>
-                            <button class="btn btn-sm btn-outline-${student.status !== false ? 'secondary' : 'success'} action-btn" onclick="toggleStudentStatus('${student.userid}')">
-                                <i class="bi bi-toggle-${student.status !== false ? 'off' : 'on'}"></i> ${student.status !== false ? '禁用' : '启用'}
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger action-btn" onclick="deleteStudent('${student.userid}')">
-                                <i class="bi bi-trash"></i> 删除
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = rows.join('');
-        }
-
-        // 重置学生密码
-        function resetStudentPassword(studentId) {
-            if(!confirm('确定要重置该学生的密码吗？密码将重置为学号。')) return;
-            
-            const student = JSON.parse(localStorage.getItem(studentId));
-            if(student) {
-                student.password = simpleHash(studentId, studentId); // 密码重置为学号
-                localStorage.setItem(studentId, JSON.stringify(student));
-                showAlert('密码重置成功！新密码为学号。', 'success');
-                loadStudentData();
-            }
-        }
-
-        // 切换学生状态
-        function toggleStudentStatus(studentId) {
-            const student = JSON.parse(localStorage.getItem(studentId));
-            if(student) {
-                student.status = !student.status;
-                localStorage.setItem(studentId, JSON.stringify(student));
-                showAlert(`学生账号已${student.status ? '启用' : '禁用'}！`, 'success');
-                loadStudentData();
-            }
-        }
-
-        // 删除学生
-        function deleteStudent(studentId) {
-            if(!confirm('确定要删除该学生账号吗？此操作不可恢复！')) return;
-            
-            localStorage.removeItem(studentId);
-            showAlert('学生账号已删除！', 'success');
-            loadStudentData();
         }
 
         // 显示提示信息
@@ -538,7 +340,7 @@
             
             // 显示成功消息
             const successMsg = document.getElementById('profile-success-message');
-            successMsg.textContent = '个人信息保存成功！';
+            successMsg.textContent = 'Profile saved successfully!';
             successMsg.style.display = 'block';
             
             setTimeout(() => {
@@ -552,12 +354,12 @@
             const errorElement = document.getElementById('phone-error-message');
             
             if(!phone) {
-                errorElement.textContent = '手机号不能为空';
+                errorElement.textContent = 'Phone number cannot be empty';
                 return false;
             }
             
             if(!phoneRegex.test(phone)) {
-                errorElement.textContent = '请输入正确的手机号格式';
+                errorElement.textContent = 'Please enter a valid phone number';
                 return false;
             }
             
@@ -571,7 +373,7 @@
             const errorElement = document.getElementById('email-error-message');
             
             if(email && !emailRegex.test(email)) {
-                errorElement.textContent = '请输入正确的邮箱格式';
+                errorElement.textContent = 'Please enter a valid email address';
                 return false;
             }
             
@@ -580,14 +382,7 @@
         }
 
         // 学生注册开关
-        document.getElementById('allow-register').addEventListener('change', function() {
-            const userid = localStorage.getItem('token');
-            const teacher = JSON.parse(localStorage.getItem(userid));
-            teacher.allowRegister = this.checked;
-            localStorage.setItem(userid, JSON.stringify(teacher));
-            
-            showAlert(`学生自主注册已${this.checked ? '开启' : '关闭'}`, 'info');
-        });
+        // 已移除该页面的冗余逻辑，该功能应在 teacher-profile.html 中处理
     </script>
 
     <!-- 密码修改脚本 -->
@@ -613,13 +408,13 @@
             
             // 验证新密码一致性
             if(newPassword !== confirmPassword) {
-                document.getElementById('confirm-password-error').textContent = '两次输入的密码不一致';
+                document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
                 return;
             }
             
             // 验证原密码正确性
             if(simpleHash(oldPassword, userid) !== teacher.password) {
-                document.getElementById('old-password-error').textContent = '原密码错误';
+                document.getElementById('old-password-error').textContent = 'Incorrect current password';
                 return;
             }
             
@@ -629,7 +424,7 @@
             
             // 显示成功消息
             const successMsg = document.getElementById('password-success-message');
-            successMsg.textContent = '密码修改成功！请重新登录。';
+            successMsg.textContent = 'Password changed successfully! Please login again.';
             successMsg.style.display = 'block';
             
             // 清空表单
@@ -648,7 +443,7 @@
             const errorElement = document.getElementById('old-password-error');
             
             if(!oldPassword) {
-                errorElement.textContent = '原密码不能为空';
+                errorElement.textContent = 'Current password cannot be empty';
                 return false;
             }
             
@@ -662,12 +457,12 @@
             const errorElement = document.getElementById('new-password-error');
             
             if(!newPassword) {
-                errorElement.textContent = '新密码不能为空';
+                errorElement.textContent = 'New password cannot be empty';
                 return false;
             }
             
             if(newPassword.length < 6) {
-                errorElement.textContent = '密码长度至少6位';
+                errorElement.textContent = 'Password must be at least 6 characters';
                 return false;
             }
             
@@ -682,12 +477,12 @@
             const errorElement = document.getElementById('confirm-password-error');
             
             if(!confirmPassword) {
-                errorElement.textContent = '确认密码不能为空';
+                errorElement.textContent = 'Confirm password cannot be empty';
                 return false;
             }
             
             if(newPassword !== confirmPassword) {
-                errorElement.textContent = '两次输入的密码不一致';
+                errorElement.textContent = 'Passwords do not match';
                 return false;
             }
             

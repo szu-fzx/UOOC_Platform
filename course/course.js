@@ -342,11 +342,13 @@ function addComment(courseId) {
 
     const transaction = db.transaction(['comments'], 'readwrite');
     const objectStore = transaction.objectStore('comments');
+    const now = Date.now();
     const comment = {
         courseId,
         text: commentText,
-        id: Date.now(),
-        userid: getCurrentUserId()
+        id: now,
+        userid: getCurrentUserId(),
+        timestamp: now
     };
     const request = objectStore.add(comment);
 
@@ -412,11 +414,13 @@ function addNote(courseId) {
 
     const transaction = db.transaction(['notes'], 'readwrite');
     const objectStore = transaction.objectStore('notes');
+    const now = Date.now();
     const note = {
         courseId,
         text: noteText,
-        id: Date.now(),
-        userid: getCurrentUserId()
+        id: now,
+        userid: getCurrentUserId(),
+        timestamp: now
     };
     const request = objectStore.add(note);
 
