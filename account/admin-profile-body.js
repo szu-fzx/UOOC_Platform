@@ -43,6 +43,7 @@ request.onupgradeneeded = function (event) {
 
 request.onsuccess = function(event) {
     db = event.target.result;
+    // 页面脚本可能比 DOM 先加载，这里只是预加载；真正渲染交给 DOMContentLoaded 触发
     loadCourses();
 };
 
@@ -55,17 +56,53 @@ function loadCourses() {
     const objectStore = transaction.objectStore('courses');
     const request = objectStore.getAll();
     request.onsuccess = function (event) {
-    const courses = event.target.result;
-    const courseList = document.getElementById('course-list');
-    courseList.innerHTML = ''; // 清空课程列表
-    // 根据推荐状态对课程进行排序
-    courses.sort(((a, b) => b.recommend - a.recommend));
-    courses.forEach(course => {
-        const courseCard = document.createElement('div');
-        courseCard.className = 'course-card';
-        courseCard.innerHTML = `
+        const courses = event.target.result || [];
+        const courseList = document.getElementById('course-list');
+        // DOM 尚未渲染完成，稍后重试
+        if (!courseList) {
+            setTimeout(loadCourses, 300);
+            return;
+        }
+        // 确保列表栅格样式生效
+        courseList.style.display = 'grid';
+        courseList.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
+        courseList.style.gap = '20px';
+        courseList.style.minHeight = '200px';
+        courseList.innerHTML = ''; // 清空课程列表
+
+        // 如果没有数据，尝试用全局 coursesData 直接写入，再重载
+        if (courses.length === 0) {
+            const seedData = (typeof coursesData !== 'undefined' && Array.isArray(coursesData)) ? coursesData : null;
+            if (seedData && seedData.length > 0) {
+                console.warn('No courses found, seeding from coursesData...');
+                const txSeed = db.transaction(['courses'], 'readwrite');
+                const storeSeed = txSeed.objectStore('courses');
+                seedData.forEach(c => storeSeed.put(c));
+                txSeed.oncomplete = () => setTimeout(loadCourses, 600);
+                return;
+            }
+            if (typeof initCoursesData === 'function') {
+                console.warn('No courses found, seeding via initCoursesData...');
+                initCoursesData();
+                setTimeout(loadCourses, 1000);
+                return;
+            }
+            const emptyTip = document.createElement('div');
+            emptyTip.style.padding = '20px';
+            emptyTip.style.color = '#666';
+            emptyTip.textContent = 'No courses available. Please open the homepage once to seed data.';
+            courseList.appendChild(emptyTip);
+            return;
+        }
+
+        // 根据推荐状态对课程进行排序
+        courses.sort(((a, b) => (b.recommend ? 1 : 0) - (a.recommend ? 1 : 0)));
+        courses.forEach(course => {
+            const courseCard = document.createElement('div');
+            courseCard.className = 'course-card';
+            courseCard.innerHTML = `
                 <input type="checkbox" class="ui-checkbox" data-id="${course.id}" ${course.recommend ? 'checked' : ''}>
-                <img src="${course.carouselImages[0]}" alt="${course.title}">
+                <img src="${Array.isArray(course.carouselImages) && course.carouselImages[0] ? course.carouselImages[0] : '../Homepage/images/courses/cs-1.jpg'}" alt="${course.title}">
                 <div class="course-info">
                     <h3 class="course-title">${course.title}</h3>
                     <p class="course-desc">${course.description}</p>
@@ -73,6 +110,7 @@ function loadCourses() {
             `;
             courseList.appendChild(courseCard);
         });
+        console.log('Admin render courses total:', courses.length);
     };
 
     // 为设置推荐按钮添加点击事件
@@ -85,6 +123,11 @@ function loadCourses() {
         console.error('IndexedDB error:', event.target.errorCode);
     };
 }
+
+// 保证 DOM 就绪后再尝试渲染一次
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(loadCourses, 300);
+});
 
 function recommendCourses() {
     const transaction = db.transaction(['courses'], 'readwrite');

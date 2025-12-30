@@ -175,6 +175,29 @@ button:hover {
     overflow: hidden;
 }
 
+/* ---------------------------
+   Admin page overrides
+   Fix: student-profile.css hides `.content > div` by default, causing admin page to render nothing.
+--------------------------- */
+.admin-page .content {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.admin-page .content > div {
+    display: block !important; /* ensure #recommend is visible */
+    height: auto !important;
+}
+
+.admin-page .tabs-content {
+    overflow: visible !important;
+}
+
 .course-stats {
     display: flex;
     justify-content: space-between;
